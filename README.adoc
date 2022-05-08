@@ -45,12 +45,12 @@ However, other media begets different social processes.
 Oral traditions natural undermine individual authorship claims, as for better or worse the work is mutating at some non-zero rate.
 Improvisation traditions embrace this, where the fixed idea is more "culture" than "work", providing a structure / means of coordinating a performance which in its specifics is fresh and not a reproduction of anything in particular.
 
-That's great for "art", but what about, *ahem*, "serious prose"?
+That's great for "art", but what about, _ahem_, "serious prose"?
 
 Well, in our internet age, their is no reason to "freeze" works to disseminate them.
-In fact, HTTP sucks as broadcasting / otherwise taking advantage of immutability, so one could almost say the web by its very sloppiness is *encouraging* a break with the traditions of the printing press.
+In fact, HTTP sucks as broadcasting / otherwise taking advantage of immutability, so one could almost say the web by its very sloppiness is _encouraging_ a break with the traditions of the printing press.
 (Don't take this part to seriously, HTTP's primitive nature is not, I believe, net good.
-And there are *many* other preassures to continue the printing press model.)
+And there are _many_ other preassures to continue the printing press model.)
 
 === The Garden
 
@@ -79,7 +79,7 @@ We'll see!
 
 === Calculus
 
-Those that learned and remember calculus should be able to understand that the stream is is something like the *derivative* of the garden, and the garden likewise something like the *integral* of the stream.
+Those that learned and remember calculus should be able to understand that the stream is is something like the _derivative_ of the garden, and the garden likewise something like the _integral_ of the stream.
 
 I think this is quite useful realization, and (if you take my word on that first part) I think it is a good example about how "hand-wave calculus" is an essential liberal art.
 I rather have fewer kids learn about polynomials, and more kids learn how, given rough drawings of ℝ → ℝ functions, to draw their approximate derivatives and antiderivatives.
