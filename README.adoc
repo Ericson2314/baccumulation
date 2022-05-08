@@ -1,0 +1,93 @@
+= John tries to write a "baccumulation"
+
+"Blog" comes from "web log".
+"Baccumulation" is a tortured analogue from "web accumulation".
+("Baccus" has nothing to do with it.)
+
+== Time, labor, and shitposting
+
+https://hapgood.us/2015/10/17/the-garden-and-the-stream-a-technopastoral/ is a nice piece, critiquing the form of most writing in the internet age.)
+
+It is worth a read, but let me both highly condense the key points and argue them from a slightly different perspective.
+
+=== The Stream
+
+Currently, most writing or "content labor", broadly construed, consists of producing works which have this two-phase life cycle:
+
+. Create
+. Disseminate
+
+We can charactarize these along two axes as follows:
+
+. Create
+  - Much editting
+  - Few viewers
+
+. Disseminate
+  - Little-to-no editting
+  - Many viewers
+
+So right away, we see a produce-consumer divide, and the work ossifying even as more people see it for the first time.
+
+Of course, the production ideas does not stop, so the result is that this is an iterative process.
+New ideas result in new works, each of which are finalized and disseminated in turn.
+What we have is a "Stream" of works over time, and that is where the second part of the second part of the document comes from.
+
+=== Materialism Interlude
+
+Before getting into alternatives and passing judgement upon the stream, let's do some materialism.
+Whether documents are handwritten or printed, dissemination and revisions by "original authors" are mutually exclusive.
+Thus, for most of the history of writing, a editing--dissemination dichotomy is mostly inevitable.
+After the printing press, when much more dissemination became affordable, the "stream" aspect really took too, as writing one-off pieces (versus, say, just copying ancient religious texts) became far more feasible.
+
+However, other media begets different social processes.
+
+Oral traditions natural undermine individual authorship claims, as for better or worse the work is mutating at some non-zero rate.
+Improvisation traditions embrace this, where the fixed idea is more "culture" than "work", providing a structure / means of coordinating a performance which in its specifics is fresh and not a reproduction of anything in particular.
+
+That's great for "art", but what about, *ahem*, "serious prose"?
+
+Well, in our internet age, their is no reason to "freeze" works to disseminate them.
+In fact, HTTP sucks as broadcasting / otherwise taking advantage of immutability, so one could almost say the web by its very sloppiness is *encouraging* a break with the traditions of the printing press.
+(Don't take this part to seriously, HTTP's primitive nature is not, I believe, net good.
+And there are *many* other preassures to continue the printing press model.)
+
+=== The Garden
+
+If we can disseminate and edit simultaneously with the internet?
+What would it look like if we did?
+The answer is shown in Wikis, games like Dwarf Fortress and EVE Online (neither of which I have played, to be transparent), and long lived software projects.
+This is the Garden.
+
+I have a big affection for these types of things.
+I like editing more than I like writing first drafts.
+I don't like producer--consumer divides.
+I don't like performer/entertainer--audience divides.
+
+The most important thing to realize is that while they are a radical break from the stream in large part, there are some important threads of continuity.
+A consumer divorced from the culture at large would not be able to follow the stream.
+More advanced stream entries required having first consumed more basic ones.
+Clearly, there is some "state" going on here", but what is it?
+The answer is that the consumer internalizes at least some port of what they have consumed, and carriers it forward to the next thing they do.
+
+The garden is, first and foremost, making that implicit and individual activity explicit and communal!
+Instead of individual accumulating "the discourse" in our heads based off the stream, we can directly write down that accumulation and exchange that instead.
+The garden "cuts to the chase" focusing on the end result rather than the skeuomorphic stream historically used to get us there.
+
+The snarky title is left as either an exercise for the reader to do some web searching, or an exercise for me to write more stuff.
+We'll see!
+
+=== Calculus
+
+Those that learned and remember calculus should be able to understand that the stream is is something like the *derivative* of the garden, and the garden likewise something like the *integral* of the stream.
+
+I think this is quite useful realization, and (if you take my word on that first part) I think it is a good example about how "hand-wave calculus" is an essential liberal art.
+I rather have fewer kids learn about polynomials, and more kids learn how, given rough drawings of ℝ → ℝ functions, to draw their approximate derivatives and antiderivatives.
+
+== So what the hell is this "baccumulation"
+
+It is me trying to write a blog but with the stream aspects removed, and garden aspects put in their place instead.
+Rather than discrete posts, I will write, rewrite, and rearrange things As I Please.
+This will take place under version control, so permalinks are possible despite the "rearranging" seemingly dooming the enterprise to link-rot.
+
+We'll see what happens!
