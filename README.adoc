@@ -90,4 +90,11 @@ It is me trying to write a blog but with the stream aspects removed, and garden 
 Rather than discrete posts, I will write, rewrite, and rearrange things As I Please.
 This will take place under version control, so permalinks are possible despite the "rearranging" seemingly dooming the enterprise to link-rot.
 
+The current form is just a git repo.
+No rendering to HTML, and no hand-maintained indices, just raw asciidoc and relative links between files.
+I do have a private version for WIP things I do not want to share yet,
+but I will try to keep edits in public by default.
+There will be no force-pushing of anything older than a few minutes, so those permalinks do not break.
+The license is CC BY-NC-SA 4.0.
+
 We'll see what happens!
