@@ -1,0 +1,234 @@
+= Type Inference
+
+I have long had some unrefined slightly contrarian thoughts on type inference.
+Then I talked to James Deikun (https://github.com/xplat[xplat]) who had some similar thoughts but much better refined.
+James will probably implement this and write a more thorough explanation someday, but I wanted to start writing about this stuff sooner.
+
+== An opinionated history
+
+To understand the direction of current type inference research and practice, I think studdying the (sub-)field's history is important.
+Here's my opinionated version of that history.
+
+=== Backstory
+
+_Much of this is hardly specific to type inference, I'll move and link it eventually._
+
+Through the burst of the dot-com bubble, types were mainly used for languages like C and C++ (and Pascal and more...) that needed them first and foremost for compilation.
+In particular, the are there to allow the compiler to be *dramatically* simple and stupider, giving the programmer explicit control over the output of compilation in a way that could be useful, but could also be shear drudgery.
+Helping the programmer write correct programs (independent of how the language was implemented, i.e. whether it was compiled at all) felt like at best a secondary goal, and worst a complete non-concern.
+(Never mind the history of `+struct+`s being added to C later purely for more reasons of program convenience.
+Folks frustrated with C or C++ did not give it credit for that.)
+
+The alternative programming language scene (especially in the US) was dominated by Lisp and then the "scripting" languages of Perl later Python industry.
+All 3 are stereotypically untyped and interpreted, and these two traits became associated with programming heterodoxy.
+Part and parcel with that, alternative languages got derided as slow.
+
+As more businesses who are not first and foremost "tech companies" (like Sun, Microsoft, Adobe, let's be clear) find themselves hiring programmers, C and (at least pre modern) C++ eventually loose out for being simply too unproductive to write.
+Java becomes popular as the accessible language for big business.
+But while Java eventually gets generics, types are still bit clunky.
+
+Eventually Paul Graham writes his http://www.paulgraham.com/pypar.html[Python Essay] which evidently is quite influential and says Python is the new Lisp for Cool Kids.
+It is important to generalize from the more narrow denotation of the text to its broader connotations:
+
+* Python may cool, but per the bottom e.g. Ruby can use the same arguments.
+  More broadly, the claim is that the "scripting languages" are heirs to the more highbrow "Lisp / Smalltack" tradition.
+
+* If Java is the "normie" language used by mediocre "corporate" programmers, Python helps makes (post dot-com crash) startup's like Y combinator's trendy.
+  The Java narrative was that computers were going mainstream, and every Fortune 500 company needed to grow its in-house IT and write in-house software.
+  No longer would "applied computers" be confined to the tech companies or the adventurous vanguard that had been doing e.g. Cobol on mainframes.
+  The Paul Graham story was that lame existing businesses would never be able to adapt, and only renegade upstarts ("startup" is a "redrum"!) using renegade tech would do the job.
+  All the investment that would happen via existing large corporations should instead happen via Paul Graham and friends.
+
+It would be appear the Paul Graham approach won out, though I almost as skeptical it did on long-term organizational merits as I am that Python is actually a productive language.
+
+=== (Damas–)Hindley–Milner is the hero
+
+So where are *our* favorite typed good languages in all this?
+Rather caught in the middle.
+
+In the 1990s and 2000s, ML and Haskell became better known with the internet, but were still fairly niche.
+
+We had no love for C / C++ / Java / the whole "OOP" academic-industrial complex, but we also completely disagreed with the startup scripting language crowd that types are clunky and annoying, and "Dynamic types" (untyped) languages are the only productive option for the hero-prototypers unburdened by bureaucracy getting things done.
+We were thus caught in the middle, wanting to critique both the old mainstream languages but in more narrow and specific way, and new mainstream languages for reacting against those in a foolish direction.
+
+Unwilling to actually fight a two-front war of ideas, great hopes were pinned on (Damas–)Hindley–Milner to show how with *no type annotations* at all (just like untyped languages!) one could get great benefits.
+The idea here isn't just a good cost / benefit ratio, but that those unsold on the benefits could be pleaded to give it a shot anyways just say saying the costs were so low.
+It was a pandering strategy of throwing in our lot with the scripting language crowd.
+
+"Pandering" is rather pejorative, so it's important to be clear on who the casualty was here: fancy type systems.
+Many cool ideas were treated with skepticism because if they were "bad for inference" (hard to adapt to the notoriously hard to generalize Hindley–Milner) they would be hard sell with the type-skeptic mainstream (or at least taste-making crowd).
+It would be hard for a new fancy type system to therefore appear "worth the costs".
+
+=== Bidirectional Thermadorian reaction
+
+My hunch then is that the more theoretical / theorem prover side of the field became quite fed up with Hindley–Milner and type inference in general.
+Type inference was seeing as chore, and hoop anyone wanting to do fancy type systems outside of proper theory work or "toy languages" would have to jump through.
+
+Enter bidirectional type checking, which bypasses many of the annoying subtleties and can be shoe-horned into working for a wide variety of type systems.
+I am not sure what the first "non-toy language" to use it was -- maybe Scala? -- but it took the field by storm.
+I don't know of any new language but Purescript that uses Hindley–Milner.
+
+The best traits to come out of this I think is less bidirectional type checking itself, but an emphasis on core languages and desugaring.
+
+Traditionally, the surface language is the star of the show, and the core language -- probably called a mere "intermediate representation" -- is just an implementation detail.
+Perhaps the intermediate representation can represent everything in fewer constructs, but it may also represent items in more steps, or worse, less safely, relying on nothing to separate the wheat from the chafe than the mere fact that certain programs are presumably decent because they are in the image of compilation from the nice surface language.
+
+The core language approach turns this around.
+The surface language is allowed to be crufty, perhaps an accumulation of time of design decisions good and bad.
+The core language in contrast is refined without concerns of back compat to be as close to the "platonic form" of the language as can be.
+The compilation from the surface language to the core language should be easy to understand and not drastically inflate or obfuscate the program, and for this reason we'll call it "desguaring" not "compilation".
+"Syntactic sugar", the parts being removed, presumably might initially enticing (or not if they are pure historical artifacts as mentioned above), but with "acquired taste" one learns to better appreciate the savory flavors of the refined core language.
+
+Nothing about this approach requires types --- indeed the Racket ecosystem is a shining example of it without types being necessary --- but a dismissiveness of type inference can easily grow into a skepticism of the preeminence of the source language.
+
+In its most radical form, the core language approach portrays the surface language as a mere tool for "data entry" to the heart of the system which is mediated via the core language.
+The surface is just there as a stop-gap because we don't yet know how to do better on the human–computer interaction problem, ideally finding an ergonomic way for Human and Computer a like to work with a less-sugared or entirely unsweetened core language directly.
+
+I think that's all pretty great.
+The problem is I think is bidirectional type checking itself, rather than the world views that motivated it (fancier type systems that do more things!) or that it in turn helped helped promote (core language preeminence!).
+I think it in at least its now-traditional form it completely misses the mark on what the good and bad parts of Hindley–Milner are, and so "throws the baby out with the bathwater".
+
+But before getting to that, one more bit of history.
+
+=== Types win
+
+Silicon Valley startups may still be with us, along with the underlying short-termist and insufficiently-social mindset that I think underpins the worst of approval for untyped languages, but the original programming language culture wars are completely dead.
+
+First of all, everything is slow now.
+Scaling bottlenecks and parallelism opportunities in hardware didn't create a mainstream auto-parallelism functional approach as many of us might have hoped, but they did kill old-school imperative programming's ability to performance-shame everything else.
+Getting away from good physical truths to something more Harrison Bergeron-esque, ahead-of-time compilation is no longer mainstream as first the ubiquity of Python and Ruby and then the far greater ubiquity of Javascript means that a huge part of the (visible) industry isn't even trying to be fast.
+Regular uses complain about software being slow too, of course.
+The irony is our extremely conservative and incrementalist approach to performance [for one, it operates layer-by-layer, so we e.g. try to change software to be fast on existing hardware, or change hardware to run existing programs faster] is that traditional imperative programming has been given more life-support than it deserves, but without all but the biggest companies being involved with this sort of thing it hardly matters.
+
+Second of law, large times in the west coast (your welcome, Seattle) giants have revealed the stupidity of forgoing types with lots of people, and the companies acted accordingly.
+Typescript, mypy, the Ruby one, etc.: every scripting language that professed to hate types now has an official opt-in gradual type system!
+I am happy for this, but yes I am definitely smirking too.
+
+Finally, new languages like Rust, sort of Swift, and all these Zig/Nim/hacker-news-I-can't-keep-up languages are typed from day-1, showing the complete ideological victory spans greenfield and reform efforts a like.
+Those languages, especially Rust, are bridging
+
+Java getting lambdas, perhaps monomorphizing type parameters, and other things that have slipped beneath my radar is also good.
+It shows it's "not just types" getting adopted, too.
+
+And even as concision / ergonomics are a priority, this work has (thankfully!) come with a recognition that it's good for humans to write and read even types that could be inferred!
+Haskell warns on top level definitions without explicit signatures --- so much for global inference!
+Rust doesn't even let one write top-level definitions without (mostly explicit) signatures.
+The signatures are rendered as the most important part of the code documentation too, as they should be!
+Gradual types are prized less for the ability to mix untyped and typed code indefinitely (broke) than the ability to bring types to an existing codebase without pissing off all your coworkers (woke).
+These are excellent realizations and points of the new consensus.
+
+All and all, I am not so worried about the state of programming languages as I used to be.
+Programming-language-based work is still at the forefront of understand the radically-untapped potential of "informatics" for society, but the more narrow goal of "if there is a better language will people even recognize it?" has been won.
+
+What I hope this means for type inference is that doing better need not feel too disruptive or destructive.
+But with the wind in our sails, and the ability of a single core language to support many surface language variants to deal with migrating, it's a fine to go to go make type inference better without worrying about what other problems we'd be leaving unattended.
+
+Most important is the methologic goal:
+
+. Resurrect the traditional view that type inference should be a centerpiece of the type system and have its own elegance.
+  Ultimately, good type inference story shows that types are composition in ways we've forgotten to appreciate, having deemed that too high a bar.
+
+. Do so *without* falling back on the old insecurities around annotations.
+
+== Type inference today, technically
+
+=== Hindley–Milner, the good and the bad ==
+
+To start, let's decompose Hindley–Milner into its core ingredients.
+The idea here is that if we throw these constituent ideas together in some "alt history", they collective determine the outcome enough to produce, if not exactly Hindley–Milner, something quite like it.
+What might they be?
+
+. Unification itself (Robinson unification)
+
+. Preserving unification variables between unification problems
+
+. "Prenex" normal form polymorphism.
+
+Unification itself is good.
+If you read any wikipedia page about it, read about https://en.wikipedia.org/wiki/Subsumption_lattice[subsumption lattices].
+Lattice = good, remember, and this indeed is good.
+We have a purely syntactic approach, the bare essence of solving equations most generalized, that despite throwing out all theory of what our syntax might *mean*, still has a decent semantic story.
+Excellent.
+
+Preserving unification variables between unification problems is also good.
+Even though sharing variables between/across unification problems is not immediate in the above formalism, with a few intermediate steps it follows from the associativity of the lattice operations that sharing variables is legit and we can solve the problem in any order getting the same result.
+Confluence is *de rigueur* in programming language semantics, but still sorely *not* so in the broader traditional "solving / normalizing / rewriting" world.
+It is good that we have it.
+
+"Prenex" normal form polymorphism however is a disaster.
+The big crutch of the above is that unification, with or without the variable sharing, is fundamentally a *first order* theory, but that the programs we are trying to type, and the type variables they might implicitly bind, are fundamentally *higher order*.
+Hindley–Milner completely side-steps this.
+We have prenex normal form itself, we have instantiating of "poly types", we have top level polymorphism and let-polymorphism -- all this is *garbage and hacks*, epicycles that refuse to deal with the fundamental mismatch between the higher order problem domain and first order method.
+
+. It wrecks confluence.
+The decision whether to convert residual unification variables to (freshly prenex quantified) type variables must be made before use sites are processed.
+
+. As the phrase "use sites" lets slip, this extra confluence-breaking step is associated subexpressions being bound to names for no necessitated reason.
+
+These actively undermines everything beginners have been taught about binding concrete items to names being an arbitrary choice in the "let"-augmented lambda calculus: naming things _does_ matter in subtle ways, the demon of first-order-ness rears its head!
+
+Granted, the above is "garbage" I've never had a good intuition for, and failed to implement proper the one time I tried long ago in undergrad.
+So yes, perhaps I am biased.
+But we can certainly do better (thanks James for pointing me to the literature he curated!), and so I am more interested in writing about or implementing the prospective solution than reevaluating Hindley–Milner.
+
+=== Bidirectional inference misses the mark
+
+It gives up on the one good bit --- the ability to solve constraints in arbitrary order.
+It instead scapegoats sharing variables between unification problems, which on its own is quite innocent as discussed above.
+Finally, mixing all the concepts together (per the usual presentation) it doesn't expose the first order vs higher order rot at the heart of Hindley–Milner, dealing with problems in other ways.
+
+Languages in the ML tradition sometimes like to claim they are "guess free", and also have "principal types".
+The former says that the solver never makes assumptions beyond what the constraints show.
+The latter says untyped expressions have a single "best" type -- a type will work in strictly more situations that each and every less good type that could also be assigned.
+
+The latter relates -- I conjecture with some confidence -- to the lattice structures mentioned above.
+Because bidirectional gives up on that, it gives up on them.
+OK, fine.
+The former however bidirectional algorithms do at least sometimes claim, but I don't buy it.
+If you have to solve problems in a certain order, were you to solve them out of order is the resulting failure not tantamount to being forced to guess or otherwise be less than fully general along the way?
+Worse are admissions that "checked" types are more expressive than "inferred" types.
+If not every checked type can be inferred, are we not guessing when we pick unique solution type from a censored menu?
+
+Someone should argue me on these things.
+Maybe bidirectional narrow obeys the *letter* of some formalization of "guess-freeness", but I don't see how it could be construed as obeying the *spirit* of it.
+
+== What we can do instead
+
+_Warning: mere outline._
+
+=== Do higher order unification right
+
+James writes https://github.com/haskell/error-messages/issues/45#issuecomment-1044761433
+
+Papers: https://hal.inria.fr/inria-00077197/document and https://www.cs.cmu.edu/~fp/papers/INRIA-RR-3591.pdf
+
+=== Do type variable quantification right
+
+ML^F.
+
+GHC "tried and failed" but other explanations (more on that later).
+
+Seems to be some confusion from conflating bound variables and constraints.
+They may both be "invisible" (in the Dependent Haskell parlance), but the similarities end there.
+ML^F is beautiful and works well because the System-F types it conflates via its bounded quantification are erased to be the same thing!
+By respecting such an erasure equivalence class, typed and untyped languages and operational semantics are all brought together in glorious harmony.
+
+=== Subtyping?
+
+https://www.cs.tufts.edu/~nr/cs257/archive/stephen-dolan/thesis.pdf is a masterpiece not only on the algorithm itself, but championing a math/semantics-first approach to the problem.
+
+Unsubstantiated hunch: that keeping track of the *direction* of data flow (the foundation of any approach to type inference with sub-typing) is a good idea for better errors even if we are elaborating to a language without subtyping.
+
+== How to implement it
+
+_Warning: mere outline._
+
+ML_sub is too hard https://lptk.github.io/programming/2020/03/26/demystifying-mlsub.html
+
+ML^F is too hard (todo link many times).
+
+Observe the shameful lack of code reuse in production type inference engines.
+Observe potential for compositionality demonstrated in libraries like `+bound+` and `+unification-fd+` show it is possible to factor out concepts in a language-agnostic way.
+Need to double down on that until the complexity of these advanced methods becomes tractable.
+
+Finally, one long term goal of GHC modularity is alternative type checker could be swapped in, and then these methods that defied retrofitting to the existing 80,000 monster could perhaps still prove themselves at "GHC scale".
