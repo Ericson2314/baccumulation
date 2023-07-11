@@ -20,26 +20,26 @@ and https://lists.cam.ac.uk/sympa/arc/cl-capsicum-discuss/2022-09/msg00000.html[
 Here is the basic idea:
 
 1. Load an executable into a fresh new unscheduled process (we might call this an "embryonic" process)
-
-   [source,c]
-   ---
-   int proc_create_unscheduled(const char * path);
-   ---
++
+[source,c]
+----
+int proc_create_unscheduled(const char * path);
+----
 
 2. Set file descriptors and other state on that process
-
-   [source,c]
-   ---
-   void proc_set_args(int procfd, const char argv[][]);
-   void proc_set_fd(int procfd, int child_fd, int parent_fd);
-   ---
++
+[source,c]
+----
+void proc_set_args(int procfd, const char argv[][]);
+void proc_set_fd(int procfd, int child_fd, int parent_fd);
+----
 
 3. Submit it to the scheduler
-
-   [source,c]
-   ---
-   void proc_submit(int procfd]);
-   ---
++
+[source,c]
+----
+void proc_submit(int procfd]);
+----
 
 Instead of creating a child with all the capabilities of the parent and then carefully removing capabilities we don't want, we create a child with 0 capabilities and then grant it the ones we do want.
 This opt-in rather than opt-out approach gives much better incentives with respect to developer effort and the https://en.wikipedia.org/wiki/Principle_of_least_privilege[principle of least privilege].
@@ -80,9 +80,9 @@ This is silly.
 Windows and `C:\` had it right (almost): we should be able to mount a filesystem afresh without any notion of a global namespace.
 
 [source,c]
----
+----
 int mountfd(int source_at, const char *source_path, const char *filesystem_type, ...);
----
+----
 
 This would just return a directory file descriptor for the root of the newly-opened filesystem.
 An anonymous directory would just be this with "tmpfs".
@@ -116,9 +116,9 @@ There can be a much better solution, which is to pass around file descriptors fo
 
 This would create such a file descriptor.
 [source,c]
----
+----
 int netiface_open(...);
----
+----
 It might need to be a family of things, since there are many types of interfaces that support many different sorts of addressing schemes.
 For example, we could open a raw device (with enough privileges) or open an IP address + port (with the extact device(s) being used left unspecified) for TCP and UDP.
 
@@ -126,10 +126,10 @@ An important variation would be to create these anonymously for Unix sockets.
 This is how we solve problem 2.
 
 [source,c]
----
+----
 int netiface_connect(int netiface);
 int netiface_listen(int netiface);
----
+----
 These give us regular sockets (like `socketpair`) representing one half of a connection.
 By not reusing the file descriptor for `connect`ing, the symmetry with `listen`ins is restored.
 
