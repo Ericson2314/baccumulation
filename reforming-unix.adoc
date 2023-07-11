@@ -1,0 +1,137 @@
+= Reforming Unix
+
+Unix is bad.
+But file descriptors are good.
+Modern Unix-derived operating systems (Linux, some BSDs) are already moving towards file descriptors for everything.
+https://wiki.freebsd.org/Capsicum[Capsicum] further showed how we can disable lots of global namespaces so we can simply and elegantly just rely on file descriptors.
+Now we just need to finish the job, making a few new system calls to make working without global namespaces better.
+
+== Spawning processes
+
+Fork + exec is a terrible way to spawn processes.
+See https://www.microsoft.com/en-us/research/uploads/prod/2019/04/fork-hotos19.pdf for a respectable paper saying as much too.
+Unfortunately, it doesn't offer any alternative which is entirely better.
+http://catern.com/rsys21.pdf is better and actually does, though the implementation it describes is just in userspace for now.
+I have sent some emails about this too
+https://lore.kernel.org/lkml/f8457e20-c3cc-6e56-96a4-3090d7da0cb6@JohnEricson.me/T/#m6be1994668e6f34837496c86f37f9fe52bfae990[to the Linux Mailing list],
+https://lists.freebsd.org/archives/freebsd-arch/2022-January/000140.html[to a FreeBSD one],
+and https://lists.cam.ac.uk/sympa/arc/cl-capsicum-discuss/2022-09/msg00000.html[to the Capsicum] one.
+
+Here is the basic idea:
+
+1. Load an executable into a fresh new unscheduled process (we might call this an "embryonic" process)
+
+   [source,c]
+   ----
+   int proc_create_unscheduled(const char * path);
+   ----
+
+2. Set file descriptors and other state on that process
+
+   [source,c]
+   ----
+   void proc_set_args(int procfd, const char argv[][]);
+   void proc_set_fd(int procfd, int child_fd, int parent_fd);
+   ----
+
+3. Submit it to the scheduler
+
+   [source,c]
+   ----
+   void proc_submit(int procfd]);
+   ----
+
+Instead of creating a child with all the capabilities of the parent and then carefully removing capabilities we don't want, we create a child with 0 capabilities and then grant it the ones we do want.
+This opt-in rather than opt-out approach gives much better incentives with respect to developer effort and the https://en.wikipedia.org/wiki/Principle_of_least_privilege[principle of least privilege].
+
+Also, unlike POSIX spawn, Linux's `clone` and friends, we have no need to cram a gazillion flags onto one operation.
+The fact that the new process is unscheduled means can set up the state however we like, and take as much time / as many operations as we like to do so.
+
+In fact, we generalize the steps above to:
+
+1. Create a fresh blank unscheduled process
+
+2. Set state on that process
+
+3. Submit it to the scheduler
+
+The address space / memory map on the new process is just more state.
+We can implement loading ELFs in userspace if we like, just `mmap`ing pages in the child from the parent as instructed by the program headers.
+In this manner, we're just as powerful as fork too, but weird duplication semantics (trying to set up the child to be like the parent) are also opt-in rather than opt-out.
+
+It really is the best of all options.
+
+== Mounting
+
+Recent versions of (https://man7.org/linux/man-pages/man2/memfd_create.2.html[Linux] and https://man.freebsd.org/cgi/man.cgi?query=memfd_create&sektion=3&n=1[FreeBSD] have "memfds".
+
+This grew out of "tmpfs".
+The idea is simple:
+since the OS already has a file cache in memory for performance reasons, that can just be used without a backing "real" persistent filesystem as a files system in its own right.
+A memfd is just a capability to an anonymous file with an implementation presumably also shared with the file cache / tmpfs.
+
+But if we can create anonymous files, why can't we create anonymous directories?
+A `memdird_create` would work quite well with, say, `open_at`.
+There should be no issue, we can again just reuse "tmpfs", just this time more of it.
+
+There is one last variation of this --- why stop at tmpfs?
+Convention mount needs to take some namespace from the global filesystem / mount namespace.
+This is silly.
+Windows and `C:\` had it right (almost): we should be able to mount a filesystem afresh without any notion of a global namespace.
+
+[source,c]
+----
+int mountfd(int source_at, const char *source_path, const char *filesystem_type, ...);
+----
+
+This would just return a directory file descriptor for the root of the newly-opened filesystem.
+An anonymous directory would just be this with "tmpfs".
+
+Is there a file equivalent of this?
+I haven't yet thought of any, but I haven't yet thought of a good way to explain the asymmetry either.
+
+== Networking
+
+A lot of people admit the socket API sucks and is incongruous with with everything else.
+A lot of people praise Bill Joy for cranking out the implementation and embarrassing the company on the ARPA project.
+These people should talk to each other more.
+
+A few issues:
+
+1. A socket from `socket` that has not yet been `bound` or `connected` serves no purpose.
+   It is as if we had to create an "open file description" first before deciding which file we wanted to open with it.
+   This is garbage;
+   the extra steps might correspond to the kernel allocating versus initializing the data structure, but this serves no semantic or performance purpose to the userland program.
+
+2. No anonymous listening sockets.
+   You can create an single connection with `socketpair`, but for a listening socket capable of `accept`ing multiple connections?
+   To fucking bad.
+   POSIX says you must `bind` before `listen`ing, and that means mucking around with the shared filesystem.
+   Yuck.
+   Linux has "abstact" sockets, but they exist in another namespace, with shorter names!
+   Substituting one global namespace for another?
+   Wow, so ambitious.
+
+There can be a much better solution, which is to pass around file descriptors for the interfaces we can connect and listen on.
+
+This would create such a file descriptor.
+[source,c]
+----
+int netiface_open(...);
+----
+It might need to be a family of things, since there are many types of interfaces that support many different sorts of addressing schemes.
+For example, we could open a raw device (with enough privileges) or open an IP address + port (with the extact device(s) being used left unspecified) for TCP and UDP.
+
+An important variation would be to create these anonymously for Unix sockets.
+This is how we solve problem 2.
+
+[source,c]
+---
+int netiface_connect(int netiface);
+int netiface_listen(int netiface);
+---
+These give us regular sockets (like `socketpair`) representing one half of a connection.
+By not reusing the file descriptor for `connect`ing, the symmetry with `listen`ins is restored.
+
+Capsicum encourages removing permissions from file descriptions before sending around file descriptors.
+We should likewise be ale to restrict network interface fds so only one of connecting or listening is possible.
