@@ -22,24 +22,24 @@ Here is the basic idea:
 1. Load an executable into a fresh new unscheduled process (we might call this an "embryonic" process)
 
    [source,c]
-   ----
+   ---
    int proc_create_unscheduled(const char * path);
-   ----
+   ---
 
 2. Set file descriptors and other state on that process
 
    [source,c]
-   ----
+   ---
    void proc_set_args(int procfd, const char argv[][]);
    void proc_set_fd(int procfd, int child_fd, int parent_fd);
-   ----
+   ---
 
 3. Submit it to the scheduler
 
    [source,c]
-   ----
+   ---
    void proc_submit(int procfd]);
-   ----
+   ---
 
 Instead of creating a child with all the capabilities of the parent and then carefully removing capabilities we don't want, we create a child with 0 capabilities and then grant it the ones we do want.
 This opt-in rather than opt-out approach gives much better incentives with respect to developer effort and the https://en.wikipedia.org/wiki/Principle_of_least_privilege[principle of least privilege].
@@ -80,9 +80,9 @@ This is silly.
 Windows and `C:\` had it right (almost): we should be able to mount a filesystem afresh without any notion of a global namespace.
 
 [source,c]
-----
+---
 int mountfd(int source_at, const char *source_path, const char *filesystem_type, ...);
-----
+---
 
 This would just return a directory file descriptor for the root of the newly-opened filesystem.
 An anonymous directory would just be this with "tmpfs".
@@ -104,8 +104,8 @@ A few issues:
    the extra steps might correspond to the kernel allocating versus initializing the data structure, but this serves no semantic or performance purpose to the userland program.
 
 2. No anonymous listening sockets.
-   You can create an single connection with `socketpair`, but for a listening socket capable of `accept`ing multiple connections?
-   To fucking bad.
+   You can create an single connection with `socketpair`, but for a listening socket capable of `accept` -ing multiple connections?
+   Too fucking bad.
    POSIX says you must `bind` before `listen`ing, and that means mucking around with the shared filesystem.
    Yuck.
    Linux has "abstact" sockets, but they exist in another namespace, with shorter names!
@@ -116,9 +116,9 @@ There can be a much better solution, which is to pass around file descriptors fo
 
 This would create such a file descriptor.
 [source,c]
-----
+---
 int netiface_open(...);
-----
+---
 It might need to be a family of things, since there are many types of interfaces that support many different sorts of addressing schemes.
 For example, we could open a raw device (with enough privileges) or open an IP address + port (with the extact device(s) being used left unspecified) for TCP and UDP.
 
