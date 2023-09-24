@@ -6,6 +6,30 @@ Modern Unix-derived operating systems (Linux, some BSDs) are already moving towa
 https://wiki.freebsd.org/Capsicum[Capsicum] further showed how we can disable lots of global namespaces so we can simply and elegantly just rely on file descriptors.
 Now we just need to finish the job, making a few new system calls to make working without global namespaces better.
 
+== Null namespaces
+
+If I am not mistaken, Capsicum was implemented fairly "shallowly" by just sanitizing system calls.
+But for operating systems like Unix with some sort of swappable namespaces, we can start implement this more deeper.
+
+Namespaces as a way of achieving isolation are crude (their core competency is not isolation but isolation *retrofitting* for existing programs).
+However, they do have an excellent side effect in the implementation of *de-globalizing* the implementation.
+For example, before there were (at least conceptually) single global variables for *the* root file system, *the* network interfaces, etc., but now that there is no single "the", there cannot be.
+(I haven't looked at all the code, and I don't doubt there are vestiges of old ways, but one gets the idea.)
+
+The world we want is one of not of *multiple* global namespaces to switch between, but *no* global interfaces.
+But the above implementation changes are still really helpful!
+Now that there are multiple such namespaces to choose from, code and data structures cannot implicitly refer to the single choice (ambient authority), but must be explicit with some sort of reference.
+To rid ourselves of global namespaces in some context, we should simply delete those references, replacing them with some sort of Null reference.
+(Thankfully C makes it very easy to have null references ;))
+By finding all the places that would use these references and make them fail on the null reference, we have implemented what we want!
+That may sound hard, but it is *much* easier than trying to retrofit code from stopping using some global variable; the explicit nature of these references helps immensely.
+
+Put another way, while global namespaces implement ambient authority in userspace (boo!) the force the implementation itself no have less ambient authority (yay!).
+That's great and very helpful to us.
+
+This "deep" method should ultimately be more secure and easier to maintain than the "shallow" syscall auditing approach;
+it acts at a natural choke point (in-kernel references to namespaces) rather than an extremely wide and hard to defend perimeter (the syscalls).
+
 == Spawning processes
 
 Fork + exec is a terrible way to spawn processes.
