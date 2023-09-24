@@ -63,7 +63,7 @@ It really is the best of all options.
 
 == Mounting
 
-Recent versions of (https://man7.org/linux/man-pages/man2/memfd_create.2.html[Linux] and https://man.freebsd.org/cgi/man.cgi?query=memfd_create&sektion=3&n=1[FreeBSD] have "memfds".
+Recent versions of (https://man7.org/linux/man-pages/man2/memfd_create.2.html[Linux] and https://man.freebsd.org/cgi/man.cgi?query=memfd_create&sektion=3&n=1[FreeBSD]) have "memfds".
 
 This grew out of "tmpfs".
 The idea is simple:
