@@ -117,7 +117,8 @@ I haven't yet thought of any, but I haven't yet thought of a good way to explain
 The `fsopen` system call in Linux now has is thankfully a step in that direction.
 (See https://lwn.net/Articles/759499/[this LWN article] or https://people.kernel.org/brauner/mounting-into-mount-namespaces[this blog post] for more information about it.)
 Unfortunately, it it doesn't seem than one can get a directory file descriptor from a detached mount yet, like my `mountfd` described above.
-I was happy to see that the https://lwn.net/Articles/759656/[first comment] on that LWN article always wanted this functionality.
+I was happy to see that the https://lwn.net/Articles/759656/[first comment] on that LWN article also wanted this functionality.
+\[Thanks to https://github.com/raitobezarius[Ryan Lahfa] for making me aware of this.]
 
 == Networking
 
