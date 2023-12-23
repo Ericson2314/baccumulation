@@ -92,7 +92,7 @@ Recent versions of (https://man7.org/linux/man-pages/man2/memfd_create.2.html[Li
 This grew out of "tmpfs".
 The idea is simple:
 since the OS already has a file cache in memory for performance reasons, that can just be used without a backing "real" persistent filesystem as a files system in its own right.
-A memfd is just a capability to an anonymous file with an implementation presumably also shared with the file cache / tmpfs.
+A "memfd" is just a capability to an anonymous file with an implementation presumably also shared with the file cache / tmpfs.
 
 But if we can create anonymous files, why can't we create anonymous directories?
 A `memdird_create` would work quite well with, say, `open_at`.
@@ -119,6 +119,46 @@ The `fsopen` system call in Linux now has is thankfully a step in that direction
 Unfortunately, it it doesn't seem than one can get a directory file descriptor from a detached mount yet, like my `mountfd` described above.
 I was happy to see that the https://lwn.net/Articles/759656/[first comment] on that LWN article also wanted this functionality.
 \[Thanks to https://github.com/raitobezarius[Ryan Lahfa] for making me aware of this.]
+
+== Temporarily temporary files
+
+Memfd / tmpfs is fine when one is sure the data won't be needed later.
+But say we are preparing something we later want to persist to disk as the final step?
+From memfd /tmpfs, we would be doing a cross file system move, which means "VFS -> VFS -> disk".
+The "VFS -> VFS" is a silly extra hop.
+
+A really snazzy thing would be to take an these VFS things and "back" them after the fact.
+This would allow just VFS -> Disk where we first assign a backing store (the filesystem) to the tmpfs in-memory objects, and `fsync` or similar to push them out.
+
+This doesn't exist, but something close does: `O_TMPFILE`.
+https://lwn.net/Articles/619146/ covers it well; the idea is to create an unlinked file, which can then be linked later.
+Almost equivalently, it is a memfd (a later concept) but with a backing fileystem already set.
+In other words, it is the result of the "assign backing store" operation asked for above on a memfd, but from when the file is created.
+
+Just as before with memfds, the limitation is that it's regular files only.
+File systems already implement the "delete when closed and link count goes to 0" logic, which `O_TMPFILE` can piggy-back upon.
+However for directories we would have to recursively crawl children to delete everything.
+This isn't so inherently bad --- after all, a file that is not contiguous memory will require some crawling around too --- but it is a novel operation for file systems to implement.
+Thankfully, bachefs is going to implement this!
+See https://bcachefs.org/Roadmap/#tmpdir_support for details.
+
+It's instructive to think about syncing/flushing with this.
+For unlinked files, there is no logical notion of durability to worry about:
+On restart, all files will be closed, and therefore all unlinked data is unreachable and it is undefined whether it was persisted or not.
+However, paging out can still happen to free up memory.
+With a tmpfs/memfd, this just goes to swap (if it exists), the temporary backing store for unbacked pages (a "homeless shelter" of sorts).
+But if we think we want to write some/all of this data a file system eventually, this is a bit wasteful.
+The `O_TMPFILE` approach, by assigning the file system up front, will instead have the page out go to the filesystem devices.
+This means memory pressure can get us a "head start" on the flush that will need to happen eventually once the file is linked and file system unmounted (if those do happen).
+The writing to swap doesn't help in contrast, because while the data is paged out, it is paged out to the wrong place --- we can't just magically teleport it from the swap device to the right place on the file system's devices!
+
+This difference of flushing under memory pressure, being the difference between the tmpfs/memfd and `O_TMPFILE` worlds, is something that the hypothetical "assign backing filesystem to existing VFS object" would allow playing with, since before it is assigned it flushes one way, and after it is assigned in flushes another way.
+
+A small aside: the bcachefs linked above page says the `fsync` is a noop for temporary items, because the "logical durability isn't defined".
+But there is a cruder "physical durability" that is possible: if one does force flushing first without memory pressure requesting it, it does still have the "head start" benefit that a future sync after linking --- i.e. once logical durability is defined --- would be faster if the data is already on disk.
+(This is a case of the general principle that observational equivalence with and without costs are two distinct things, and both interesting.)
+Still, I don't think this sort of "head start on tmp file" use-case is worthy of an addition knob.
+Just making fsync on (transitively, for the temp dir case) unlinked things always do nothing is the better and more interesting place to start.
 
 == Networking
 
