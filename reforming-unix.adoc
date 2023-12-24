@@ -85,7 +85,15 @@ In this manner, we're just as powerful as fork too, but weird duplication semant
 
 It really is the best of all options.
 
-== Mounting
+== File System
+
+Remember, the file system is a flavour of database.
+We shoudn't just it by other standards.
+
+Remember also that file descriptors are much more general than the file system.
+We should probably call them "OS descriptors" or something to make this clear.
+
+=== Mounting
 
 Recent versions of (https://man7.org/linux/man-pages/man2/memfd_create.2.html[Linux] and https://man.freebsd.org/cgi/man.cgi?query=memfd_create&sektion=3&n=1[FreeBSD]) have "memfds".
 
@@ -120,7 +128,7 @@ Unfortunately, it it doesn't seem than one can get a directory file descriptor f
 I was happy to see that the https://lwn.net/Articles/759656/[first comment] on that LWN article also wanted this functionality.
 \[Thanks to https://github.com/raitobezarius[Ryan Lahfa] for making me aware of this.]
 
-== Temporarily temporary files
+=== Temporarily temporary files
 
 Memfd / tmpfs is fine when one is sure the data won't be needed later.
 But say we are preparing something we later want to persist to disk as the final step?
@@ -159,6 +167,73 @@ But there is a cruder "physical durability" that is possible: if one does force 
 (This is a case of the general principle that observational equivalence with and without costs are two distinct things, and both interesting.)
 Still, I don't think this sort of "head start on tmp file" use-case is worthy of an addition knob.
 Just making fsync on (transitively, for the temp dir case) unlinked things always do nothing is the better and more interesting place to start.
+
+=== File system transactions
+
+_https://news.ycombinator.com/item?id=35416477 This thread was really good and mirrored many of my own thoughts.
+It is good to see more criticism rather than people assuming since Unix is widespread it must be good._
+
+Mutating data correctly usually requires transactions.
+The Unix file system doesn't offer this, that's a big bummer.
+Instead there is `fsync`, but it also dissapoints:
+
+1. Unclear scope: `fsync` will flush all changes to a file.
+   If something else was also changing the file, too bad, you need to wait for it too.
+
+2. Overkill for many tasks.
+
+The second one is what I'll discuss.
+
+Suppose we are working on a batch processing system where jobs produce file system results, and jobs can depend on other jobs.
+We only want to store the results of a sucessful job, and only store those results in full.We also want downstream jobs to start as soon as possible.
+
+If we don't do something like an `fsync` before marking the job complete, we could end up with incomplete files on disk and a corrupted result.
+If we do an `fsync`, we avoid that, but we crudely wait for flushes even though the next job can work fine reading from the VFS / unflushed in-memory-information.
+
+A first good solution is a write barrier.
+Imagine something like the following:
+[source,c]
+----
+// "O_TMPDIR" unlinked tempdir as described above in previous section
+int temp_dir_fd = ...;
+
+// do build populating dir
+...;
+
+// new thing, or maybe recursive wrapper around the new thing.
+write_barrier_deep(temp_dir_fd);
+
+// N.B. directory link count 0 -> 1 doesn't run afowl no directory
+// hardlinks rule.
+linkat(temp_dir_fd, NULL, results_store_fd, "job-result-name");
+----
+
+The idea is beyond the barrier is *not* that everything needs to be flushed at this point,
+but that nothing that comes afterwards can be flushed until what came before is flushed.
+This means that if the on-disk directory is linked into place on disk, it _must_ correctly reflect the in-memory version as if the barrier.
+In other words, if the OS did _not_ finish persisting the directory and its contents, then it must also persist the link.
+(In our brave new `O_TMPDIR` world, any partially-flushed unreachable data from the not-let-linked `O_TMPDIR` will get garbage-collected at some later point.
+Cool stuff!)
+
+At the same time, though, the barrier only makes some on-disk writes wait for other on-disk writes;
+it does *not* make any in-memory operations wait for on-disk operations like `sync` / `fsink` do.
+This keeps everything nice and pipelined --- we can kick of downstream jobs right away without waiting for upstream jobs to be written to disk.
+It should basically be as fast as the no-barrier case.
+
+Does this sort of barrier exist anywhere?
+It turns out Darwin has an `F_BARRIERFSYNC` to `fsync` that I think does this, though the documentation is spotty.
+But there has been plenty of discussion for it elsewhere too.
+The Hacker News thread links https://lwn.net/Articles/270891/ this 2008 LKML email that proposes it.
+In fact, it it also mentions something better, from https://www.spinics.net/lists/linux-fsdevel/msg70047.html and https://www.spinics.net/lists/linux-fsdevel/msg70047.html
+
+Here's the thing about barriers, they represent _edges_ in the dependency graph, but the _nodes_ are still implicit ("things before" and "things after").
+"Before" and "after" come from the control flow, and also the current OS thread/process/whatever.
+More implicit per thread/process/whatever state is yet another foot-gun for green threads, and really anything tricky in an event loop (green threads is a spectrum not a binary).
+The alternative is to explicitly create groups of IO operations, with dependencies between them.
+Explicitly assigning IO operations to groups and not using control flow makes everything explicit and minimizes ambient state.
+
+As a bonus, the IO groups can be arbitrarily partial ordered as opposed to a totally ordered with barriers (or maybe tree-ordered if issuing a barrier and then forking a thread does the right thing).
+I am not sure this has practical benefits, but I do like it conceptually.
 
 == Networking
 
