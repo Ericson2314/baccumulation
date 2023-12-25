@@ -6,6 +6,23 @@ Modern Unix-derived operating systems (Linux, some BSDs) are already moving towa
 https://wiki.freebsd.org/Capsicum[Capsicum] further showed how we can disable lots of global namespaces so we can simply and elegantly just rely on file descriptors.
 Now we just need to finish the job, making a few new system calls to make working without global namespaces better.
 
+Why bother?
+Look at the living relic that is the ribosome.
+Core abstractions can last a hell of a long time.
+The less we manage things --- and computing taken as a whole is pretty unmanaged --- the more likely computing lumbers along like the biosphere, and we're likely to keep layering new things on top but leave the core in place.
+Maybe that's fine, and it's a hell of legacy for some Unix greybeards, but I'd like to think we can do better.
+
+Why reform rather than replace?
+Projects like Fuschia are very cool, but changing a gazillion things at once is risky.
+There is a massive amount of userland code that cannot be replaced all at once.
+There is a massive amount of hardware that can't be given new drivers at once.
+In the rest of the economy, we know something about _capital turnover_.
+For tasks like decarbonization, there is interest in managing / speeding up that process.
+The same mindset should be taken to computing I think --- it is a microcosm of these things.
+
+OK, that's enough philosophizing for now.
+Here are some concrete new interfaces (and corresponding criticism of old ones) that could be part of such a reform project.
+
 == Null namespaces
 
 If I am not mistaken, Capsicum was implemented fairly "shallowly" by just sanitizing system calls.
