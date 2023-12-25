@@ -105,7 +105,7 @@ It really is the best of all options.
 == File System
 
 Remember, the file system is a flavour of database.
-We shoudn't just it by other standards.
+We shoudn't judge it by other standards.
 
 Remember also that file descriptors are much more general than the file system.
 We should probably call them "OS descriptors" or something to make this clear.
