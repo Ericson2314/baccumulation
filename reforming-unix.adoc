@@ -237,7 +237,7 @@ I am not sure this has practical benefits, but I do like it conceptually.
 
 == Networking
 
-A lot of people admit the socket API sucks and is incongruous with with everything else.
+A lot of people admit the socket API sucks and is incongruous with everything else.
 A lot of people praise Bill Joy for cranking out the implementation and embarrassing the company on the ARPA project.
 These people should talk to each other more.
 
