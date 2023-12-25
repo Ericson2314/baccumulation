@@ -79,7 +79,7 @@ void proc_set_fd(int procfd, int child_fd, int parent_fd);
 +
 [source,c]
 ----
-void proc_submit(int procfd]);
+void proc_submit(int procfd);
 ----
 
 Instead of creating a child with all the capabilities of the parent and then carefully removing capabilities we don't want, we create a child with 0 capabilities and then grant it the ones we do want.
