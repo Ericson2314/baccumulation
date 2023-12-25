@@ -252,6 +252,25 @@ Explicitly assigning IO operations to groups and not using control flow makes ev
 As a bonus, the IO groups can be arbitrarily partial ordered as opposed to a totally ordered with barriers (or maybe tree-ordered if issuing a barrier and then forking a thread does the right thing).
 I am not sure this has practical benefits, but I do like it conceptually.
 
+== Asynchronous interfaces
+
+Actually, I don't have a lot to add here.
+A lot of people are excited and writing about about `io_uring`, and Fuschia (last I checked) already made the call to axe synchronous blocking APIs too.
+
+I will point out that this has a good interaction with the file system transactions part.
+When requests and responses are paired 1-1, the asynchronous APIs offer perhaps performance improvements but no expressive power.
+When they are _not_ 1-1, however, things get more interesting.
+
+When we have a write-back cache, like the VFS, we can have not one but _two_ useful response events from a write operation: (a) updated the cache, (b) updated the underlying thing.
+
+For the barrier / write-group examples a above, we already covered that we don't to wait for (a) / that `fsync` is overkill.
+But this is only half of the story -> only *some* things don't need to wait for (b).
+If we wanted to, e.g. send a message to the external world "OK this job is totally finished and the result saved" (to use our running batch processing example), we would want that to wait for durability, just as an email server sending an acknowledgement of receipt wants to wait for durability.
+That means waiting for (b).
+
+https://lwn.net/Articles/789024/ nicely discusses plans for "Asynchronous `fsync`" with `io_uring` which would work in this manner.
+But we only need a separate request if we want to restore the 1-1 pairing.
+
 == Networking
 
 A lot of people admit the socket API sucks and is incongruous with everything else.
