@@ -74,5 +74,51 @@ then what we are looking for is "continuous products".
 
 Enter, the [product integral](https://en.wikipedia.org/wiki/Product_integral).
 
-When I was first taking economics masters classes at John Jay, that Wikipedia article was in a lot worse shape, and didn't give me the answers I was looking for.
+When I was first taking economics masters classes at [John Jay](https://johnjayeconomics.org/), that Wikipedia article was in a lot worse shape, and didn't give me the answers I was looking for.
 But now it is much better, and in particular it now cites <doi:10.1016/j.jmaa.2007.03.081> which is fantastic!
+I'll recap some parts of it, but it's short, and you should just go read it yourself.
+
+### Multiplicative derivative
+
+The multiplicative derivative is defined as follows:
+
+```math
+f^* := x \mapsto \lim_{h \to 0} \left( \frac{f(x + h)}{f(x)} \right)^\frac{1}{h}
+```
+
+The crucial things to note are that:
+
+- Compared to the usual "additive" derivative, each arithmetic operation of "output" values is "promoted":
+  addition to multiplication, multiplication to exponentiation.
+
+- There is no addition (or subtraction) of "output" values.
+
+This indicates we are now working on the level of multiplication, and not cheating.
+Indeed, the output type of $f$ could be something for which addition is not even defined![^ring-like]
+
+[^ring-like]:
+  However, needing exponentiation means we still need some ring-like structure.
+  The other flavours of product integrals on the Wikipedia page get into this more, including changing up the definition in ways that are, in my opinion, dubious and against the point of this piece, for scalars, to dodge the exponentiation requirement.
+
+After some manipulations (which you should definitely read work through!) the paper shows this definition equivalent to
+
+```math
+f^* := x \mapsto e^{(\ln \circ f)'(x)}
+```
+
+Rewritten in [point-free](https://wiki.haskell.org/Pointfree) style, where $D_+$ is the regular (additive) [differential operator](https://en.wikipedia.org/wiki/Differential_operator) and $D_*$ is our new one:
+
+```math
+\begin{aligned}
+
+D_* &= (\exp \circ) \cdot D_+ \cdot (\ln \circ) \\
+    &= (\exp \circ) \cdot D_+ \cdot (\exp^{-1} \circ) \\
+    &= (\exp \circ) \cdot D_+ \cdot (\exp \circ)\exp^{-1} \\
+\end{aligned}
+```
+(Note: the inner $\circ$ is for function composition for real functions, $\mathbb{R} \to $\mathbb{R}$, whereas the outer $\cdot$ is for function composition for real-to-real functions, $(\mathbb{R} \to $\mathbb{R}) \to (\mathbb{R} \to $\mathbb{R})$.)
+
+We can now see the very nice way our new form of differentiation looks something like a group conjugation: tweak (the function), differentiate, and then untweak.
+
+This is very close to the plogarithmic derivative](https://en.wikipedia.org/wiki/Logarithmic_derivative),
+except that one skips the final $\exp$ step, loosing the symmetry.
