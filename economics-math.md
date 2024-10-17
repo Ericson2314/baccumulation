@@ -120,5 +120,5 @@ D_* &= (\exp \circ) \cdot D_+ \cdot (\ln \circ) \\
 
 We can now see the very nice way our new form of differentiation looks something like a group conjugation: tweak (the function), differentiate, and then untweak.
 
-This is very close to the plogarithmic derivative](https://en.wikipedia.org/wiki/Logarithmic_derivative),
+This is very close to the [logarithmic derivative](https://en.wikipedia.org/wiki/Logarithmic_derivative),
 except that one skips the final $\exp$ step, loosing the symmetry.
