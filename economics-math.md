@@ -96,9 +96,9 @@ The crucial things to note are that:
 This indicates we are now working on the level of multiplication, and not cheating.
 Indeed, the output type of $f$ could be something for which addition is not even defined![^ring-like]
 
-[^ring-like]:
-  However, needing exponentiation means we still need some ring-like structure.
-  The other flavours of product integrals on the Wikipedia page get into this more, including changing up the definition in ways that are, in my opinion, dubious and against the point of this piece, for scalars, to dodge the exponentiation requirement.
+[^ring-like]:  However, needing exponentiation means we still need some ring-like structure.
+The other flavours of product integrals on the Wikipedia page get into this more, including changing up the definition to dodge the exponentiation requirement.
+I am a bit conflicted on this, because on one hand it is useful to make it work with less stuctured / more general codomains of the integrand, but on the other hand, those changes, when applied to scalars, go against what I am arguing in this piece!
 
 After some manipulations (which you should definitely read work through!) the paper shows this definition equivalent to
 
