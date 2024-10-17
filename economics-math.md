@@ -98,7 +98,7 @@ Indeed, the output type of $f$ could be something for which addition is not even
 
 [^ring-like]:  However, needing exponentiation means we still need some ring-like structure.
 The other flavours of product integrals on the Wikipedia page get into this more, including changing up the definition to dodge the exponentiation requirement.
-I am a bit conflicted on this, because on one hand it is useful to make it work with less stuctured / more general codomains of the integrand, but on the other hand, those changes, when applied to scalars, go against what I am arguing in this piece!
+I am a bit conflicted on this, because on one hand it is useful to make it work with less structured / more general codomains of the integrand, but on the other hand, those changes, when applied to scalars, go against what I am arguing in this piece!
 
 After some manipulations (which you should definitely read work through!) the paper shows this definition equivalent to
 
@@ -121,4 +121,4 @@ D_* &= (\exp \circ) \cdot D_+ \cdot (\ln \circ) \\
 We can now see the very nice way our new form of differentiation looks something like a group conjugation: tweak (the function), differentiate, and then untweak.
 
 This is very close to the [logarithmic derivative](https://en.wikipedia.org/wiki/Logarithmic_derivative),
-except that one skips the final $\exp$ step, loosing the symmetry.
+except that one skips the final $\exp$ step, losing the symmetry.
