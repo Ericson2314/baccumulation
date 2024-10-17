@@ -113,7 +113,7 @@ Rewritten in [point-free](https://wiki.haskell.org/Pointfree) style, where $D_+$
 
 D_* &= (\exp \circ) \cdot D_+ \cdot (\ln \circ) \\
     &= (\exp \circ) \cdot D_+ \cdot (\exp^{-1} \circ) \\
-    &= (\exp \circ) \cdot D_+ \cdot (\exp \circ)\exp^{-1} \\
+    &= (\exp \circ) \cdot D_+ \cdot (\exp \circ)^{-1} \\
 \end{aligned}
 ```
 (Note: the inner $\circ$ is for function composition for real functions, $\mathbb{R} \to $\mathbb{R}$, whereas the outer $\cdot$ is for function composition for real-to-real functions, $(\mathbb{R} \to $\mathbb{R}) \to (\mathbb{R} \to $\mathbb{R})$.)
