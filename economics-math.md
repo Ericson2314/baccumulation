@@ -26,7 +26,7 @@ You can only add "synchronous" percentages, and that is not a very common thing 
 > the above paragraph is not formal, and also beyond the realm of regular [dimensional analysis](https://en.wikipedia.org/wiki/Dimensional_analysis).
 > But we shouldn't dismiss it for lack of formality; the burden of proof should be on justifying correct formulae, not disputing incorrect ones ("guilty until proven innocent").
 In type theory terms, we should be conservative and ban
-$(+) : \mathrm{Percent} \to \mathrm{Percent} \to \mathrm{Percent}$,
+$(+) \colon \mathrm{Percent} \to \mathrm{Percent} \to \mathrm{Percent}$,
 and instead replace it with some more complex operation which takes a "proof of synchronicity", whatever that looks like.
 > I don't know what sort proposition we'd need to prove, but the good thing is that, based on what fallows, I think we can side-step needing to figure this operation out entirely.
 
