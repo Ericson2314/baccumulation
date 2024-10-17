@@ -116,7 +116,7 @@ D_* &= (\exp \circ -) \cdot D_+ \cdot (\ln \circ -) \\
     &= (\exp \circ -) \cdot D_+ \cdot (\exp \circ -)^{-1}
 \end{aligned}
 ```
-(Note: the inner $\circ$ is for function composition for real functions, $\mathbb{R} \to \mathbb{R}$, whereas the outer $\cdot$ is for function composition for real-to-real functions, $(\mathbb{R} \to $\mathbb{R}) \to (\mathbb{R} \to \mathbb{R})$.)
+(Note: the inner $\circ$ is for function composition for real functions, $\mathbb{R} \to \mathbb{R}$, whereas the outer $\cdot$ is for function composition for real-to-real functions, $(\mathbb{R} \to \mathbb{R}) \to (\mathbb{R} \to \mathbb{R})$.)
 
 We can now see the very nice way our new form of differentiation looks something like a group conjugation: tweak (the function), differentiate, and then untweak.
 
