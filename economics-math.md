@@ -13,7 +13,7 @@ We just need to use the right abstractions.
 Here's a starting point.
 Consider a phrase like "2% growth";
 you've seen it newspapers, in high school math doing loan interest, and maybe in econ or accounting classes too.
-The meaning of the phase is "went from 100% to 102%" (over some period), adding another %2 on top.
+The meaning of the phase is "went from 100% to 102%" (over some period), adding another 2% on top.
 
 But *adding* percents is, at best, a very dubious endeavor.
 For example what is 2% growth twice?
@@ -122,3 +122,24 @@ We can now see the very nice way our new form of differentiation looks something
 
 This is very close to the [logarithmic derivative](https://en.wikipedia.org/wiki/Logarithmic_derivative),
 except that one skips the final $\exp$ step, losing the symmetry.
+
+### Multiplicative integral
+
+
+### Multiplicative infinitisemals?
+
+This would be nice for informal multiplicative differential equations, other applied tasks.
+
+## Other topics
+
+### Elasticity
+
+- https://en.wikipedia.org/wiki/Elasticity_(economics) has an informal infinitesimals definition
+
+- https://en.wikipedia.org/wiki/Elasticity_of_a_function has a limit definition, but suspicious addition/subtractions on output values.
+
+A definition free of output-valued addition could look like this:
+
+```math
+E_*(f) = x \mapsto \lim_{m \to 1} \left( \frac{f(m x)}{m f(x)} \right)
+```
