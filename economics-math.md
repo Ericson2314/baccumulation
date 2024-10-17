@@ -25,7 +25,9 @@ You can only add "synchronous" percentages, and that is not a very common thing 
 > A quick not on method:
 > the above paragraph is not formal, and also beyond the realm of regular [dimensional analysis](https://en.wikipedia.org/wiki/Dimensional_analysis).
 > But we shouldn't dismiss it for lack of formality; the burden of proof should be on justifying correct formulae, not disputing incorrect ones ("guilty until proven innocent").
-In type theory terms, we should be conservative and ban $(+) : Percent -> Percent -> Percent$, and instead replace it with some more complex operation which takes a "proof of synchronicity", whatever that looks like.
+In type theory terms, we should be conservative and ban
+$(+) : \mathrm{Percent} -> \mathrm{Percent} -> \mathrm{Percent}$,
+and instead replace it with some more complex operation which takes a "proof of synchronicity", whatever that looks like.
 > I don't know what sort proposition we'd need to prove, but the good thing is that, based on what fallows, I think we can side-step this issue entirely.
 
 There is an alternative to addition which avoids this problem, however, and handles compounding correctly, for free.
@@ -33,19 +35,19 @@ That is multiplication.
 Instead of doing (wrong!):
 
 ```math
-a + 2% a + 2% a
+a + 2\% a + 2\% a
 ```
 
 we can do (right!):
 
 ```math
-a * (1 + 2%) * (1 + 2%)
+a * (1 + 2\%) * (1 + 2\%)
 ```
 
 or more simply,
 
 ```math
-a * 102% * 102%
+a * 102\% * 102\%
 ```
 
 And there we have a bit a [shibboleth](https://en.wikipedia.org/wiki/Shibboleth):
