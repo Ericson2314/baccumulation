@@ -5,9 +5,9 @@
 There's something wrong with economics and accounting math.
 Not "wrong-answers" wrong, but bad pedagogy, and icky approximations.
 
-It's easy to go after approximations --- "No! I insist that you write this other formula that is actually correct" ...and far larger.
+It's easy to go after approximations — "No! I insist that you write this other formula that is actually correct" ...and far larger.
 And indeed, if there was just a trade off between precision and bloat, I would not bother writing this.
-Rather, and what really gets me excited, is that there is no such trade-off --- we can be both more correct and just as (or more!) terse.
+Rather, and what really gets me excited, is that there is no such trade-off — we can be both more correct and just as (or more!) terse.
 We just need to use the right abstractions.
 
 Here's a starting point.
