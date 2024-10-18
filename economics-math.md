@@ -1,6 +1,6 @@
 # Fixing the Mathematics of Growth for Economics and Accounting
 
-## Pre-calculus
+## Intro
 
 There's something wrong with economics and accounting math.
 Not "wrong-answers" wrong, but bad pedagogy, and icky approximations.
@@ -54,10 +54,14 @@ And there we have a bit a [shibboleth](https://en.wikipedia.org/wiki/Shibboleth)
 call it "102% growth", not "2% growth".
 It might be too late to change English, but one can dream...
 
+## Multiplicative sequence pre-calculus
+
+Let's go over some math before returning to examples / motivation
+
 ### Products of sequences
 
 Suppose we have a loan with a variable (compound) interest rate $r$, the outstanding balance is calculated every unit interval, and no payments are made.
-Because of the discrete points at which the interest is calculated, $r$ can be a (real-valued) sequence ($\mathbb{N} -> \mathbb{R}$).
+Because of the discrete points at which the interest is calculated, $r$ can be a (real-valued) sequence ($\mathbb{N} \to \mathbb{R}$).
 The nice way to compute the outstanding balance is thus with products of a sequence:
 
 ```math
@@ -102,7 +106,11 @@ and
 \prod Ϙ s = s / s_0
 ```
 
-## Calculus
+### Variable rate loans
+
+TODO
+
+## Multiplicative Calculus
 
 The world may (or may not be) discrete, but we use continuous math to explore intuitions and ideals for a reason.
 In physics there is explicitly [continuum mechanics](https://en.wikipedia.org/wiki/Continuum_mechanics) to make this argument.
@@ -129,6 +137,10 @@ But now it is much better, and in particular it now cites <doi:10.1016/j.jmaa.20
 I'll recap some parts of it, but it's short, and you should just go read it yourself.
 
 Like most calculus texts, that paper covers differentiation before integration, but because the examples we're working from above, let's do the opposite.
+
+```math
+{\huge \mathscr{P}}_a^b f(x)^{dx}
+```
 
 TODO
 
@@ -187,12 +199,27 @@ This would be nice for informal multiplicative differential equations, other app
 
 ### Elasticity
 
-- https://en.wikipedia.org/wiki/Elasticity_(economics) has an informal infinitesimals definition
+The [Wikipedia article for elasticity](https://en.wikipedia.org/wiki/Elasticity_(economics), like most econ texts I could find from a quick glance, just has an informal definition made from infinitesimals:
 
-- https://en.wikipedia.org/wiki/Elasticity_of_a_function has a limit definition, but suspicious addition/subtractions on output values.
+The $x$-elasticity of $y$ is:
+```math
+\epsilon := \frac{\partial y / y}{\partial x / x}
+```
+
+I won't lie, that is pretty.
+But it does more suspicious addition — despite looking like all division — in the form of the infinitesimals.
+This is because infinitesimals, as "funny zeros" --- funny additive identities --- are an additive concept.
+Or, if that is a bit too much woo-woo, more prosaically it is because they stem from subtraction in limits.
+
+This [other wikipedia article](https://en.wikipedia.org/wiki/Elasticity_of_a_function) has a limit definition:
+```math
+\epsilon(f) := \frac{x}{(f(x)}f'(x)
+```
+
+suspicious addition/subtractions on output values.
 
 A definition free of output-valued addition could look like this:
 
 ```math
-E_*(f) = x \mapsto \lim_{m \to 1} \left( \frac{f(m x)}{m f(x)} \right)
+E_*(f) := x \mapsto \lim_{m \to 1} \left( \frac{f(m x)}{m f(x)} \right)
 ```
