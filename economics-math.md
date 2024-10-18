@@ -61,30 +61,45 @@ Because of the discrete points at which the interest is calculated, $r$ can be a
 The nice way to compute the outstanding balance is thus with products of a sequence:
 
 ```math
-B_t = A \prod_{u=0}^t r_u
+B_t = A \prod_{u = 0}^t r_u
 ```
 
 Similar to lumping together the 1 and 2% above as 102%, note that in the formula above the balance seems more "fundamental" than the total interest:
 $B_t - A$ is the total interest written in terms of the balance (and principle), and there isn't an obvious way to rewrite that expression such that we "skip" calculating the balance.
 
-### Ratios of sequences
-
-If we have some sequence $s$, the *(forward) quotient operator* is
+The subscripts in the above formula don't add too much value in this case.
+We can define a product operator on sequences as follows:
 
 ```math
-Ϙs_n := \frac{s_{n+1}}{s_n}
+\prod s := n \mapsto \prod_{i = 0}^n s_i
+```
+
+And then (with arithmetic on sequences defined point-wise), the balance formula above can be rewritten
+
+```math
+B = A \prod r
+```
+
+### Ratios of sequences
+
+If we have some sequence $s$, the *(forward) quotient operator* is[^qoppa]
+
+[^qoppa]: https://math.stackexchange.com/q/3691073 made the cheeky suggestion to use the archaic Greek letter "qoppa" for this. I like it!
+
+```math
+Ϙ s := n \mapsto \frac{s_{n+1}}{s_n}
 ```
 
 We have a nice "fundamental therorem" where
 
 ```math
-Ϙ(n \mapsto \prod_{i=0}^n s_i) = s
+Ϙ \left( \prod s \right) = s
 ```
 
 and
 
 ```math
-\prod_{i=0}^n Ϙs_i) = s / s_0
+\prod Ϙ s = s / s_0
 ```
 
 ## Calculus
