@@ -1,6 +1,6 @@
 # Fixing the Mathematics of Growth for Economics and Accounting
 
-## Basic, no calculus
+## Pre-calculus
 
 There's something wrong with economics and accounting math.
 Not "wrong-answers" wrong, but bad pedagogy, and icky approximations.
@@ -54,6 +54,39 @@ And there we have a bit a [shibboleth](https://en.wikipedia.org/wiki/Shibboleth)
 call it "102% growth", not "2% growth".
 It might be too late to change English, but one can dream...
 
+### Products of sequences
+
+Suppose we have a loan with a variable (compound) interest rate $r$, the outstanding balance is calculated every unit interval, and no payments are made.
+Because of the discrete points at which the interest is calculated, $r$ can be a (real-valued) sequence ($\mathbb{N} -> \mathbb{R}$).
+The nice way to compute the outstanding balance is thus with products of a sequence:
+
+```math
+B_t = A \prod_{u=0}^t r_u
+```
+
+Similar to lumping together the 1 and 2% above as 102%, note that in the formula above the balance seems more "fundamental" than the total interest:
+$B_t - A$ is the total interest written in terms of the balance (and principle), and there isn't an obvious way to rewrite that expression such that we "skip" calculating the balance.
+
+### Ratios of sequences
+
+If we have some sequence $s$, the *(forward) quotient operator* is
+
+```math
+Ϙs_n := \frac{s_{n+1}}{s_n}
+```
+
+We have a nice "fundamental therorem" where
+
+```math
+Ϙ(n \mapsto \prod_{i=0}^n s_i) = s
+```
+
+and
+
+```math
+\prod_{i=0}^n Ϙs_i) = s / s_0
+```
+
 ## Calculus
 
 The world may (or may not be) discrete, but we use continuous math to explore intuitions and ideals for a reason.
@@ -72,11 +105,17 @@ Regular integration is for "continuous sums";
 per the previous section, if the right way to deal with growth is not iterated addition but multiplication,
 then what we are looking for is "continuous products".
 
-Enter, the [product integral](https://en.wikipedia.org/wiki/Product_integral).
+### Multiplicative integral
+
+Enter, the [multiplicative integral](https://en.wikipedia.org/wiki/Product_integral).
 
 When I was first taking economics masters classes at [John Jay](https://johnjayeconomics.org/), that Wikipedia article was in a lot worse shape, and didn't give me the answers I was looking for.
 But now it is much better, and in particular it now cites <doi:10.1016/j.jmaa.2007.03.081> which is fantastic!
 I'll recap some parts of it, but it's short, and you should just go read it yourself.
+
+Like most calculus texts, that paper covers differentiation before integration, but because the examples we're working from above, let's do the opposite.
+
+TODO
 
 ### Multiplicative derivative
 
@@ -120,11 +159,10 @@ D_* &= (\exp \circ -) \cdot D_+ \cdot (\ln \circ -) \\
 
 We can now see the very nice way our new form of differentiation looks something like a group conjugation: tweak (the function), differentiate, and then untweak.
 
+## Logarithmic derivative, not quite what we want
+
 This is very close to the [logarithmic derivative](https://en.wikipedia.org/wiki/Logarithmic_derivative),
 except that one skips the final $\exp$ step, losing the symmetry.
-
-### Multiplicative integral
-
 
 ### Multiplicative infinitisemals?
 
