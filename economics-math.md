@@ -10,6 +10,8 @@ And indeed, if there was just a trade off between precision and bloat, I would n
 Rather, and what really gets me excited, is that there is no such trade-off — we can be both more correct and just as (or more!) terse.
 We just need to use the right abstractions.
 
+## A first example
+
 Here's a starting point.
 Consider a phrase like "2% growth";
 you've seen it newspapers, in high school math doing loan interest, and maybe in econ or accounting classes too.
@@ -35,7 +37,7 @@ That is multiplication.
 Instead of doing (wrong!):
 
 $$
-a + 2\% a + 2\% a
+a + 2\% \cdot a + 2\% \cdot a
 $$
 
 we can do (right!):
@@ -53,6 +55,92 @@ $$
 And there we have a bit a [shibboleth](https://en.wikipedia.org/wiki/Shibboleth):
 call it "102% growth", not "2% growth".
 It might be too late to change English, but one can dream...
+
+### Differing growth amounts
+
+Suppose we had $g_0$ growth for one period, $g_1$ for another, and so one.
+What does that look like?
+
+In the conventional regime where the steady-state is $\bar{g} = 0\%$ not $g = 100\%$, that's
+
+$$
+a_n = a_0 \cdot (1 + \bar{g}_0) \cdot (1 + \bar{g}_1) \cdots
+$$
+
+But with the "corrected" variables, that's simply
+
+$$
+a_n = a_0 \cdot g_0 \cdot g_1 \cdots
+$$
+
+Clearly this is terser.
+But, this just the same point as the previous section, now made using variables rather than concrete percentages.
+
+### Differing period lengths
+
+Now, say we want to incorporate time.
+Our periods will be different lengths: $\Delta t_0$, $\Delta t_1$, etc.
+The growth of each period will be given not as literally occurred over that period, but according to what it would be over a unit length of time.
+That is to day, we will not specify the growth with
+
+$$
+g'_n := \frac{a_{n +1}}{a_n}
+$$
+but with
+$$
+g_n := \left( \frac{a_{n +1}}{a_n} \right)^{\frac 1 {\Delta n}}
+$$
+
+the final amount (post growth) will thus be
+
+$$
+a_n = a_0 \cdot g_0^{\Delta t_0} \cdot g_1^{\Delta t_1} \cdots g_n^{\Delta t_n}
+$$
+
+This is correct, and terse.
+
+But I must note there is (again, if you read the previous aside) a problem with dimensional analysis.
+$\frac 1 {\Delta t}$ is not dimensionless, but rather has dimension $\frac 1 {\mathrm{T}}$, i.e. units like $\frac 1 {\mathrm{seconds}}$ $\frac 1 {\mathrm{years}}$ or similar.
+Both numbers given to exponentiation must be dimensionless, so we shouldn't be doing this.
+There is a solution, however, which is to use the identity $g = e^{\ln g}$.
+Rewriting with that, we have
+$$
+a_n = a_0 \cdot e^{(\ln g_0) \Delta t_0} \cdot e^{(\ln g_1) \Delta t_1} \cdots e^{(\ln g_n) \Delta t_n}
+$$
+
+$\ln g_t$ we hereby declare to have dimension $\frac 1 T$, and now the final exponent $\ln g_t \Delta t$ properly has dimension $1$ (dimensionless).
+The logarithm is just as dimensionally invalid as the exponent before, but for that we just need to inline further.
+Recall our definition  for $g_n$:
+
+$$
+g_n = \left( \frac{a_{n +1}}{a_n} \right)^{\frac 1 {\Delta n}}
+$$
+thus
+$$
+\begin{aligned}
+\ln g_n & = \ln \left( \left( \frac{a_{n +1}}{a_t} \right)^{\frac 1 {\Delta t_n}} \right) \\
+&= \frac 1 {\Delta t_n} \ln \left( \frac{a_{n +1}}{a_n} \right) \\
+&= \frac 1 {\Delta t_n} \left( \ln a_{n +1} - \ln {a_n} \right) \\
+\end{aligned}
+$$
+
+The final right-hand side "properly" has the proper $\frac 1 {T}$ dimension;
+we've additionally found and fixed another dimensional analysis violation in the definition of $g_t$.
+Lets call this value $\bar{\bar{g}}$:
+
+$$
+\bar{\bar{g}} := \frac 1 {\Delta t} \left( \ln a_{t +1} - \ln {a_t} \right)
+$$
+so that our formula for $a_t$ is:
+$$
+a_n = a_0 \cdot e^{\bar{\bar{g}}_0 \Delta t_0} \cdot e^{\bar{\bar{g}}_1  \Delta t_1} \cdots  e^{\bar{\bar{g}}_n  \Delta t_n}
+$$
+or equivalently
+$$
+a_n = a_0 \cdot e^{\bar{\bar{g}}_0 \Delta t_0 + \bar{\bar{g}}_1  \Delta t_1 \cdots \bar{\bar{g}}_n  \Delta t_n}
+$$
+
+Now everything is dimensionally correct.
 
 ## Multiplicative sequence pre-calculus
 
