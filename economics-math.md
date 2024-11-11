@@ -34,21 +34,21 @@ There is an alternative to addition which avoids this problem, however, and hand
 That is multiplication.
 Instead of doing (wrong!):
 
-```math
+$$
 a + 2\% a + 2\% a
-```
+$$
 
 we can do (right!):
 
-```math
+$$
 a \cdot (1 + 2\%) \cdot (1 + 2\%)
-```
+$$
 
 or more simply,
 
-```math
+$$
 a \cdot 102\% \cdot 102\%
-```
+$$
 
 And there we have a bit a [shibboleth](https://en.wikipedia.org/wiki/Shibboleth):
 call it "102% growth", not "2% growth".
@@ -64,9 +64,9 @@ Suppose we have a loan with a variable (compound) interest rate $r$, the outstan
 Because of the discrete points at which the interest is calculated, $r$ can be a (real-valued) sequence ($\mathbb{N} \to \mathbb{R}$).
 The nice way to compute the outstanding balance is thus with products of a sequence:
 
-```math
+$$
 B_t = A \prod_{u = 0}^t r_u
-```
+$$
 
 Similar to lumping together the 1 and 2% above as 102%, note that in the formula above the balance seems more "fundamental" than the total interest:
 $B_t - A$ is the total interest written in terms of the balance (and principle), and there isn't an obvious way to rewrite that expression such that we "skip" calculating the balance.
@@ -74,15 +74,15 @@ $B_t - A$ is the total interest written in terms of the balance (and principle),
 The subscripts in the above formula don't add too much value in this case.
 We can define a product operator on sequences as follows:
 
-```math
+$$
 \prod s := n \mapsto \prod_{i = 0}^n s_i
-```
+$$
 
 And then (with arithmetic on sequences defined point-wise), the balance formula above can be rewritten
 
-```math
+$$
 B = A \prod r
-```
+$$
 
 ### Ratios of sequences
 
@@ -90,21 +90,21 @@ If we have some sequence $s$, the *(forward) quotient operator* is[^qoppa]
 
 [^qoppa]: https://math.stackexchange.com/q/3691073 made the cheeky suggestion to use the archaic Greek letter "qoppa" for this. I like it!
 
-```math
+$$
 Ϙ s := n \mapsto \frac{s_{n+1}}{s_n}
-```
+$$
 
 We have a nice "fundamental therorem" where
 
-```math
+$$
 Ϙ \left( \prod s \right) = s
-```
+$$
 
 and
 
-```math
+$$
 \prod Ϙ s = s / s_0
-```
+$$
 
 ### Variable rate loans
 
@@ -138,9 +138,9 @@ I'll recap some parts of it, but it's short, and you should just go read it your
 
 Like most calculus texts, that paper covers differentiation before integration, but because the examples we're working from above, let's do the opposite.
 
-```math
+$$
 {\huge \mathscr{P}}_a^b f(x)^{dx}
-```
+$$
 
 TODO
 
@@ -148,9 +148,9 @@ TODO
 
 The multiplicative derivative is defined as follows:
 
-```math
+$$
 f^* := x \mapsto \lim_{h \to 0} \left( \frac{f(x + h)}{f(x)} \right)^\frac{1}{h}
-```
+$$
 
 The crucial things to note are that:
 
@@ -168,20 +168,20 @@ I am a bit conflicted on this, because on one hand it is useful to make it work 
 
 After some manipulations (which you should definitely read work through!) the paper shows this definition equivalent to
 
-```math
+$$
 f^* := x \mapsto e^{(\ln \circ f)'(x)}
-```
+$$
 
 Rewritten in [point-free](https://wiki.haskell.org/Pointfree) style, where $D_+$ is the regular (additive) [differential operator](https://en.wikipedia.org/wiki/Differential_operator) and $D_*$ is our new one:
 
-```math
+$$
 \begin{aligned}
-
 D_* &= (\exp \circ -) \cdot D_+ \cdot (\ln \circ -) \\
     &= (\exp \circ -) \cdot D_+ \cdot (\exp^{-1} \circ -) \\
     &= (\exp \circ -) \cdot D_+ \cdot (\exp \circ -)^{-1}
 \end{aligned}
-```
+$$
+
 (Note: the inner $\circ$ is for function composition for real functions, $\mathbb{R} \to \mathbb{R}$, whereas the outer $\cdot$ is for function composition for real-to-real functions, $(\mathbb{R} \to \mathbb{R}) \to (\mathbb{R} \to \mathbb{R})$.)
 
 We can now see the very nice way our new form of differentiation looks something like a group conjugation: tweak (the function), differentiate, and then untweak.
@@ -202,9 +202,9 @@ This would be nice for informal multiplicative differential equations, other app
 The [Wikipedia article for elasticity](https://en.wikipedia.org/wiki/Elasticity_(economics), like most econ texts I could find from a quick glance, just has an informal definition made from infinitesimals:
 
 The $x$-elasticity of $y$ is:
-```math
+$$
 \epsilon := \frac{\partial y / y}{\partial x / x}
-```
+$$
 
 I won't lie, that is pretty.
 But it does more suspicious addition — despite looking like all division — in the form of the infinitesimals.
@@ -212,14 +212,14 @@ This is because infinitesimals, as "funny zeros" --- funny additive identities -
 Or, if that is a bit too much woo-woo, more prosaically it is because they stem from subtraction in limits.
 
 This [other wikipedia article](https://en.wikipedia.org/wiki/Elasticity_of_a_function) has a limit definition:
-```math
+$$
 \epsilon(f) := \frac{x}{(f(x)}f'(x)
-```
+$$
 
 suspicious addition/subtractions on output values.
 
 A definition free of output-valued addition could look like this:
 
-```math
+$$
 E_*(f) := x \mapsto \lim_{m \to 1} \left( \frac{f(m x)}{m f(x)} \right)
-```
+$$
