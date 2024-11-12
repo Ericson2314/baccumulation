@@ -189,10 +189,10 @@ The subscripts in the above formula don't add too much value in this case.
 We can define a product and sum operators on sequences, that is, $\sum, \prod : (\mathbb{N} \to \mathbb{R}) \to (\mathbb{N} \to \mathbb{R})$, as follows:
 
 $$
-\sum s := 0 :: n \mapsto \sum_{i = 0}^n s_i
+\sum s := 0 :: \left( n \mapsto \sum_{i = 0}^n s_i \right)
 $$
 $$
-\prod s := 1 :: n \mapsto \prod_{i = 0}^n s_i
+\prod s := 1 :: \left( n \mapsto \prod_{i = 0}^n s_i \right)
 $$
 where $v :: s$ "delays" $s$ by one, using $v$ as the new initial value.
 
@@ -215,24 +215,32 @@ If we have some sequence $s$, the *(forward) quotient operator* is[^qoppa]
 [^qoppa]: https://math.stackexchange.com/q/3691073 made the cheeky suggestion to use the archaic Greek letter "qoppa" for this. I like it!
 
 $$
-Ϙ s := n \mapsto \frac{s_{n+1}}{s_n}
+{\Large Ϙ} s := n \mapsto \frac{s_{n+1}}{s_n}
 $$
 
 We have a nice "fundamental therorem" where
 
 $$
-Ϙ \left( \prod s \right) = s
+{\Large Ϙ} \left( \prod s \right) = s
 $$
 
 and
 
 $$
-\prod Ϙ s = s / s_0
+\prod \left( {\Large Ϙ} s \right) = s / s_0
 $$
 
-### Variable rate loans
+### Differing period lengths, again
 
 TODO
+
+$$
+\begin{align}
+a
+& := a_0 \cdot \prod \exp(\Delta t \cdot \bar{\bar{g}}) \\
+& ~ = a_0 \cdot \exp\left(\sum \Delta t \cdot \bar{\bar{g}}\right) \\
+\end{align}
+$$
 
 ## Multiplicative Calculus
 
