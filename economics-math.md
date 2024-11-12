@@ -401,7 +401,7 @@ Recall the limit definition of a derivative
 ```math
 f' = a \mapsto \lim_{x \to a} \frac {f(x) - f(a)} {x - a}
 ```
-The standard gemometric interpretation of this is we have a family of secants, with the two points of the secant growing ever closer together, and their limit is the one-point tangent.[^tangent limit] expresion underneath the limit is the slopes of the family of secants, and with the limit it is the slop of the tangent.
+The standard gemometric interpretation of this is we have a family of secants, with the two points of the secant growing ever closer together, and their limit is the one-point tangent.[^tangent-limit] expresion underneath the limit is the slopes of the family of secants, and with the limit it is the slop of the tangent.
 
 [^tangent-limit]: For anyone not familiar, the [Wikipedia page on tangants](https://en.wikipedia.org/wiki/Tangent) speaks of this limit somewhat.
 
@@ -419,10 +419,10 @@ For good practice, lets proove the second lemmma:
 ```
 
 Likewise, we would expect the same thing about curves of constant elasticity:
-- **geometric**: the original power law curve[^power law curve], the every curve in the family of "power law secants", and the "power law tangent" are all the same curve
+- **geometric**: the original power law curve[^power-law-curve], the every curve in the family of "power law secants", and the "power law tangent" are all the same curve.
 - **arithmetic**: the limit is trivial and we can just as well use the underlying expression for any value of $x$ and $a$ to calculate the constant elasticity.
 
-[^power law curve]: the properties we care about of these curves are not translation-invariant; on the contrary the location of the origin in crucial for comparing ratios of inputs to ratios of outputs. It is therefore fair to point out this is not "geometric" in the usual euclidean sence.
+[^power-law-curve]: the properties we care about of these curves are not translation-invariant; on the contrary the location of the origin in crucial for comparing ratios of inputs to ratios of outputs. It is therefore fair to point out this is not "geometric" in the usual euclidean sence.
 
 The geoemetric lemma is true for power law curves, but with the formulae given above, the arithmetic lemma is *false*!
 Let's try substituting an aribtrary power-law function and simplifying:
