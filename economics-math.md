@@ -186,24 +186,26 @@ B_t = A \prod_{u = 0}^{t - 1} r_u
 $$
 
 The subscripts in the above formula don't add too much value in this case.
-We can define a product operator on sequences as follows:
+We can define a product and sum operators on sequences, that is, $\sum, \prod : (\mathbb{N} \to \mathbb{R}) \to (\mathbb{N} \to \mathbb{R})$, as follows:
 
 $$
-\prod s := n \mapsto \prod_{i = 0}^n s_i
+\sum s := 0 :: n \mapsto \sum_{i = 0}^n s_i
 $$
-
-And then (with arithmetic on sequences defined point-wise), the balance formula above can be rewritten
-
 $$
-B = A \cdot \left(1 :: \prod r \right)
+\prod s := 1 :: n \mapsto \prod_{i = 0}^n s_i
 $$
-
 where $v :: s$ "delays" $s$ by one, using $v$ as the new initial value.
 
-Just as we did above, this can be rewritten with more familiar summation with $\exp$
+And then (with arithmetic on sequences defined point-wise), the balance formula above can be rewritten:
 
 $$
-B = A \cdot \exp\left(0 :: \sum \ln r \right)
+B = A \cdot \left(\prod r \right)
+$$
+
+Just as we did above, this can be rewritten with more familiar summation with $\exp$:
+
+$$
+B = A \cdot \exp\left(\sum \ln r \right)
 $$
 
 ### Ratios of sequences
