@@ -173,7 +173,7 @@ Because of the discrete points at which the interest is calculated, $r$ can be a
 The formula for the balance is informally.
 
 ```math
-B_t = A \cdot r_0 \cdot r_1 \cdot r_2 \cdots r_{t -1 }
+B_t = A \cdot r_0 \cdot r_1 \cdot r_2 \cdot \ldots \cdot r_{t -1 }
 ```
 
 Similar to lumping together the 1 and 2% above as 102%, note that in the formula above the balance seems more "fundamental" than the total interest:
