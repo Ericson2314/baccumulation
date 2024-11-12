@@ -64,13 +64,13 @@ What does that look like?
 In the conventional regime where the steady-state is $\bar{g} = 0\%$ not $g = 100\%$, that's
 
 $$
-a_n = a_0 \cdot (1 + \bar{g}_0) \cdot (1 + \bar{g}_1) \cdots
+a_n = a_0 \cdot (1 + \bar{g}_0) \cdot (1 + \bar{g}_1) \cdot \ldots \cdot (1 + \bar{g}_{n-1})
 $$
 
 But with the "corrected" variables, that's simply
 
 $$
-a_n = a_0 \cdot g_0 \cdot g_1 \cdots
+a_n = a_0 \cdot g_0 \cdot g_1 \cdot \ldots \cdot g_{n-1}
 $$
 
 Clearly this is terser.
@@ -94,7 +94,7 @@ $$
 the final amount (post growth) will thus be
 
 $$
-a_n = a_0 \cdot g_0^{\Delta t_0} \cdot g_1^{\Delta t_1} \cdots g_n^{\Delta t_n}
+a_n = a_0 \cdot g_0^{\Delta t_0} \cdot g_1^{\Delta t_1} \cdot \ldots \cdot g_{n-1}^{\Delta t_{n-1}}
 $$
 
 This is correct, and terse.
@@ -102,10 +102,10 @@ This is correct, and terse.
 But I must note there is (again, if you read the previous aside) a problem with dimensional analysis.
 $\frac 1 {\Delta t}$ is not dimensionless, but rather has dimension $\frac 1 {\mathrm{T}}$, i.e. units like $\frac 1 {\mathrm{seconds}}$ $\frac 1 {\mathrm{years}}$ or similar.
 Both numbers given to exponentiation must be dimensionless, so we shouldn't be doing this.
-There is a solution, however, which is to use the identity $g = e^{\ln g}$.
+There is a solution, however, which is to use the identity $g = \exp (\ln g)$.
 Rewriting with that, we have
 $$
-a_n = a_0 \cdot e^{(\ln g_0) \Delta t_0} \cdot e^{(\ln g_1) \Delta t_1} \cdots e^{(\ln g_n) \Delta t_n}
+a_n = a_0 \cdot \exp (\Delta t_0 \cdot \ln g_0) \cdot \exp ( \Delta t_1 \cdot \ln g_1) \cdot \ldots \cdot \exp (\Delta t_{n-1} \cdot \ln g_{n-1})
 $$
 
 $\ln g_t$ we hereby declare to have dimension $\frac 1 T$, and now the final exponent $\ln g_t \Delta t$ properly has dimension $1$ (dimensionless).
@@ -133,31 +133,57 @@ $$
 $$
 so that our formula for $a_t$ is:
 $$
-a_n = a_0 \cdot e^{\bar{\bar{g}}_0 \Delta t_0} \cdot e^{\bar{\bar{g}}_1  \Delta t_1} \cdots  e^{\bar{\bar{g}}_n  \Delta t_n}
+a_n = a_0 \cdot \exp(\Delta t_0 \cdot \bar{\bar{g}}_0) \cdot \exp(\Delta t_1 \cdot \bar{\bar{g}}_1)  \cdot \ldots \cdot  \exp(\Delta t_{n-1} \cdot \bar{\bar{g}}_{n-1})
 $$
 or equivalently
 $$
-a_n = a_0 \cdot e^{\bar{\bar{g}}_0 \Delta t_0 + \bar{\bar{g}}_1  \Delta t_1 \cdots \bar{\bar{g}}_n  \Delta t_n}
+a_n = a_0 \cdot \exp(\Delta t_0 \cdot \bar{\bar{g}}_0 + \Delta t_1 \cdot \bar{\bar{g}}_1  + \ldots + \Delta t_{n-1} \cdot \bar{\bar{g}}_{n-1})
 $$
 
-Now everything is dimensionally correct.
+Now everything is dimensionally correct, and still terse.
+Conversely, rewriting any of these equations with $\bar{g}$ would have cluttered things up again, only introducing more $\_ + 1$ inside these formulae.
+That would have been a real mess.
+
+The terse approximation for $a_n$, only valid for low $g$ and low $n$, is:
+
+$$
+a_n \approx a_0 \cdot (1 + \Delta t_0 \cdot \bar{g}_0 + \Delta t_1 \cdot \bar{g}_1  + \ldots + \Delta t_{n-1} \cdot \bar{g}_{n-1})
+$$
+
+but that is hardly more terse!
+
+### Sorting out $g$, $\bar{g}$, and $\bar{\bar{g}}$
+
+$\bar{\bar{g}}$, the final sort of growth rate variable we settled on, does admittedly have some similarites to $\bar{g}$, the one we rejected.
+$\ln g$ and $g - 1$ are similar when $g$ is close to 1, as is the case for most macro growth rates, and identical at 1: $\ln 1 = 1 - 1 = 0$.
+Perhaps correctness and usefulness of $\bar{\bar{g}}$ boosted $\bar{g}$'s reputation by means of the latter being a convenient approximation for the former.
+
+In any event, we will expressions that look like $g$ and $\bar{\bar{g}}$  in the further developments below.
 
 ## Multiplicative sequence pre-calculus
 
-Let's go over some math before returning to examples / motivation
+So far, we've used standard concepts and notations, even if the emphasis on absolute syntactic rigor with no approximations is a bit unidiomatic.
+Now, however, will introduce not harder but more obscure concepts
 
 ### Products of sequences
 
 Suppose we have a loan with a variable (compound) interest rate $r$, the outstanding balance is calculated every unit interval, and no payments are made.
 Because of the discrete points at which the interest is calculated, $r$ can be a (real-valued) sequence ($\mathbb{N} \to \mathbb{R}$).
-The nice way to compute the outstanding balance is thus with products of a sequence:
+
+The formula for the balance is informally.
 
 $$
-B_t = A \prod_{u = 0}^t r_u
+B_t = A \cdot r_0 \cdot r_1 \cdot r_2 \cdots r_{t -1 }
 $$
 
 Similar to lumping together the 1 and 2% above as 102%, note that in the formula above the balance seems more "fundamental" than the total interest:
 $B_t - A$ is the total interest written in terms of the balance (and principle), and there isn't an obvious way to rewrite that expression such that we "skip" calculating the balance.
+
+We can do better, formalizing it, with the notion of of a product of a sequence:
+
+$$
+B_t = A \prod_{u = 0}^{t - 1} r_u
+$$
 
 The subscripts in the above formula don't add too much value in this case.
 We can define a product operator on sequences as follows:
@@ -169,7 +195,15 @@ $$
 And then (with arithmetic on sequences defined point-wise), the balance formula above can be rewritten
 
 $$
-B = A \prod r
+B = A \cdot \left(1 :: \prod r \right)
+$$
+
+where $v :: s$ "delays" $s$ by one, using $v$ as the new initial value.
+
+Just as we did above, this can be rewritten with more familiar summation with $\exp$
+
+$$
+B = A \cdot \exp\left(0 :: \sum \ln r \right)
 $$
 
 ### Ratios of sequences
@@ -264,9 +298,9 @@ Rewritten in [point-free](https://wiki.haskell.org/Pointfree) style, where $D_+$
 
 $$
 \begin{aligned}
-D_* &= (\exp \circ -) \cdot D_+ \cdot (\ln \circ -) \\
-    &= (\exp \circ -) \cdot D_+ \cdot (\exp^{-1} \circ -) \\
-    &= (\exp \circ -) \cdot D_+ \cdot (\exp \circ -)^{-1}
+D_* &= (\exp \circ \_) \cdot D_+ \cdot (\ln \circ \_) \\
+    &= (\exp \circ \_) \cdot D_+ \cdot (\exp^{-1} \circ \_) \\
+    &= (\exp \circ \_) \cdot D_+ \cdot (\exp \circ \_)^{-1}
 \end{aligned}
 $$
 
@@ -279,7 +313,7 @@ We can now see the very nice way our new form of differentiation looks something
 This is very close to the [logarithmic derivative](https://en.wikipedia.org/wiki/Logarithmic_derivative),
 except that one skips the final $\exp$ step, losing the symmetry.
 
-### Multiplicative infinitisemals?
+### Multiplicative infinitesimals?
 
 This would be nice for informal multiplicative differential equations, other applied tasks.
 
