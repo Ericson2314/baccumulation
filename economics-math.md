@@ -233,7 +233,7 @@ and
 ### Differing period lengths, again
 
 We can now use the above path to rewrite our formulae for growth with varying rates for varying period lengths much more succinctly.
-The informal $\ldot$ can be replaced with the use our cumulative sequential operators.
+The informal $\ldots$ can be replaced with the use our cumulative sequential operators.
 
 ```math
 \begin{align}
