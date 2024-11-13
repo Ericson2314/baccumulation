@@ -232,15 +232,18 @@ and
 
 ### Differing period lengths, again
 
-TODO
+We can now use the above path to rewrite our formulae for growth with varying rates for varying period lengths much more succinctly.
+The informal $\ldot$ can be replaced with the use our cumulative sequential operators.
 
 ```math
 \begin{align}
 a
 & := a_0 \cdot \prod \exp(\Delta t \cdot \bar{\bar{g}}) \\
-& ~ = a_0 \cdot \exp\left(\sum \Delta t \cdot \bar{\bar{g}}\right) \\
+& ~ = a_0 \cdot \exp\left(\sum \Delta t \cdot \bar{\bar{g}}\right)
 \end{align}
 ```
+
+The commuting of the cumulative product/sum (it changes) and exponentiation is on display with little else to distract from it.
 
 ### Loan with payments
 
@@ -302,11 +305,32 @@ I'll recap some parts of it, but it's short, and you should just go read it your
 
 Like most calculus texts, that paper covers differentiation before integration, but because the examples we're working from above, let's do the opposite.
 
+Defining integrals formally is pain, so let's do something short of that.
+
 ```math
-{\huge \mathscr{P}}_a^b f(x)^{dx}
+{\huge \mathscr{P}}_a^b f(x)^{dx} := \lim_{\Delta x \to 0} \prod f(x)^{\Delta x}
 ```
 
-TODO
+The multiplicative Riemann integral is "defined" as the limit of the product of increasingly many samples of $f(x)$ taken to the $\Delta x$ power.
+
+The geometric intuitions off this are not as clear as the additive Riemann integral because are multiplicands of this are not "little rectangles" the way the addends of that are.
+Indeed, as $x$ and $f(x)$ must be dimensionless, any geometric/visual intuition is inherently suspect!
+
+This definition can be reworked into a regular integral:
+
+```math
+\begin{align}
+{\huge \mathscr{P}}_a^b f(x)^{dx}
+& = \lim_{\Delta x \to 0} \prod f(x_i)^{\Delta x} \\
+& = \lim_{\Delta x \to 0} \prod \exp\left((\ln f(x_i)) \cdot {\Delta x}\right) \\
+& = \lim_{\Delta x \to 0} \exp\left(\sum (\ln f(x_i)) \cdot {\Delta x}\right) \\
+& = \exp\left(\lim_{\Delta x \to 0} \sum (\ln f(x_i)) \cdot {\Delta x}\right) \\
+& = \exp\left(\int_a^b \ln f(x) \cdot {\Delta x}\right)
+\end{align}
+```
+
+This saves us from actually needing to rigorously define the product integral from scratch.
+
 
 ### Multiplicative derivative
 
