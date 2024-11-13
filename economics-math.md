@@ -456,8 +456,12 @@ I didn't do this before because it obscures the analogies I wanted to make, and 
 Is this formula valid for elasticity? Well, it does work for power-law functions:
 
 ```math
-a \mapsto \lim_{x \to a} \frac {\ln \frac {b \cdot x^c} {b \cdot a^c}} {\ln \frac x a} \\
-a \mapsto \lim_{x \to a} \frac {c \cdot \ln \frac {x} {a}} {\ln \frac x a} \\
+a \mapsto \lim_{x \to a} \frac {\ln \frac {b \cdot x^c} {b \cdot a^c}} {\ln \frac x a}
+```
+```math
+a \mapsto \lim_{x \to a} \frac {c \cdot \ln \frac {x} {a}} {\ln \frac x a}
+```
+```math
 a \mapsto \lim_{x \to a} c
 ```
 
