@@ -506,6 +506,11 @@ It is not exactly clear what this means just looking at it alone, but as far as 
 \epsilon(f) = a \mapsto \lim_{x \to a} \frac {\ln f(x) - \ln f(a)} {\ln x  - \ln a}
 ```
 
+One thing that is nice about this version is it exactly corresponds to how [log-log plots](https://en.wikipedia.org/wiki/Log%E2%80%93log_plot) are interpreted.
+With both axes so scaled, power law functions become lines, and elasticisties become slopes.
+The peculiar "limit of power-law secants to power-law tangent" geometric interpretation we described before are likewise transformed to the regular "limit of secants to tangent".
+I like to think these definitions make it easier to understand how those plots work.
+
 ### Multiplicative infinitesimals?
 
 This would be nice for informal multiplicative differential equations, other applied tasks.
