@@ -1,4 +1,4 @@
-# Fixing the Mathematics of Growth for Economics and Accounting
+# Refining the Basic Mathematics of Economics and Accounting
 
 ## Intro
 
