@@ -212,7 +212,8 @@ B = A \cdot \exp\left(\sum \ln r \right)
 
 If we have some sequence $s$, the *(forward) quotient operator* is[^qoppa]
 
-[^qoppa]: https://math.stackexchange.com/q/3691073 made the cheeky suggestion to use the archaic Greek letter "qoppa" for this. I like it!
+[^qoppa]: https://math.stackexchange.com/q/3691073 made the cheeky suggestion to use the archaic Greek letter "qoppa" for this.
+  I like it!
 
 ```math
 {\Large Ϙ} s := n \mapsto \frac{s_{n+1}}{s_n}
