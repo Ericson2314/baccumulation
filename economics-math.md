@@ -247,7 +247,8 @@ The commuting of the cumulative product/sum (it changes) and exponentiation is o
 
 ### Loan with payments
 
-Now let's add one more complication to our modeling goal. We'll have a variable interest rate, and variable time lengths, like before, but also variable loan payments (imagine the debtor gets behind and tries to check up).
+Now let's add one more complication to our modeling goal.
+We'll have a variable interest rate, and variable time lengths, like before, but also variable loan payments (imagine the debtor gets behind and tries to check up).
 
 The recurrence relation is this:
 ```math
@@ -275,7 +276,8 @@ However, this does not actually simplify the formula, for two reasons.
 Firstly, the interest rate itself tersely reaonably use $\bar{r}$, because the $\Delta t$ has to be an exponent (as we've discussed before.
 Secondly, we're stuck repeating the $-P$ because we need to calculate the interest *after* including the payment.
 
-There is not a close-form equation for this in the style of what we've done so far — only the recurence relation which gets around the issue with subscripts. The fundamental problem is that the loan payments are inherently additive, while the interest calculation is inherently multiplicative, so we cannot express the sequence as single cumulative sum or product for a closed-form solution.
+There is not a close-form equation for this in the style of what we've done so far — only the recurence relation which gets around the issue with subscripts.
+The fundamental problem is that the loan payments are inherently additive, while the interest calculation is inherently multiplicative, so we cannot express the sequence as single cumulative sum or product for a closed-form solution.
 
 ## Multiplicative Calculus
 
@@ -400,19 +402,19 @@ This [other Wikipedia article](https://en.wikipedia.org/wiki/Elasticity_of_a_fun
 \epsilon(f) := \frac{x}{f(x)} \cdot f'(x)
 ```
 
-but underneath the definition of the derivatie are the suspcious addition/subtractions on values with output-dimension we'd like to avoid.
+but underneath the definition of the derivative are the suspicious addition/subtractions on values with output-dimension we'd like to avoid.
 
-However, that article also transforms the original defintion into
+However, that article also transforms the original definition into
 
 ```math
 \epsilon(f) := \lim_{x \to a} \frac{\frac {f(x)}{f(a)} - 1} {\frac x a -1}
 ```
 
-With this defintion, we divide first, and then only subtract dimensionless values.
-This sucesfully avoids any critism for suspicous subtrations.
+With this definition, we divide first, and then only subtract dimensionless values.
+This successfully avoids any criticism for suspicious subtractions.
 Also, the $-1$ is very natural in this case: it would seem to be the perfect repudiation to my original claim that using values like $2\%$ rather than $102\%$ is unnatural and misguided!
 
-However, there is anothe problem with this, and a solution in the more the vein I am thinking.
+However, there is another problem with this, and a solution in the more the vein I am thinking.
 Recall that the curves of constant elasticity are [power-law functions](https://en.wikipedia.org/wiki/Power_law#Power-law_functions) in the form:
 
 ```math
@@ -425,18 +427,19 @@ Recall the limit definition of a derivative
 ```math
 f' = a \mapsto \lim_{x \to a} \frac {f(x) - f(a)} {x - a}
 ```
-The standard gemometric interpretation of this is we have a family of secants, with the two points of the secant growing ever closer together, and their limit is the one-point tangent.[^tangent-limit] expresion underneath the limit is the slopes of the family of secants, and with the limit it is the slop of the tangent.
+The standard geometric interpretation of this is we have a family of secants, with the two points of the secant growing ever closer together, and their limit is the one-point tangent.[^tangent-limit] expression underneath the limit is the slopes of the family of secants, and with the limit it is the slop of the tangent.
 
 [^tangent-limit]: For anyone not familiar, the [Wikipedia page on tangants](https://en.wikipedia.org/wiki/Tangent) speaks of this limit somewhat.
 
 Less well-known is the idea that we can do a similar geometric construction for elasticities.
-Two points determine a power-law function just as they determine a line; we can thus speak of a "power-law secent", and in the limit as the two points approach, we have a "power law tangent".
+Two points determine a power-law function just as they determine a line; we can thus speak of a "power-law secant", and in the limit as the two points approach, we have a "power law tangent".
 
-The curves of constant slope are just lines, graphs of functions in the form $x \mapsto  a \cdot x + b$. In this case, we note two lemmas, one geometric and the other arithmatic:
+The curves of constant slope are just lines, graphs of functions in the form $x \mapsto  a \cdot x + b$.
+In this case, we note two lemmas, one geometric and the other arithmetic:
 - **geometric**: the original line *is* every line in the family of secants *is* the tangent line
 - **arithmetic**: the limit is trivial and we can just as well use the underlying expression for any value of $x$ and $a$ to calculate the constant slope.
 
-For good practice, lets proove the second lemmma:
+For good practice, lets prove the second lemma:
 
 ```math
 \frac {(c \cdot x + b) - (c\cdot a +b)} {x - a} = \frac {c\cdot (x - a)} {x - a} = c
@@ -446,10 +449,11 @@ Likewise, we would expect the same thing about curves of constant elasticity:
 - **geometric**: the original power law curve[^power-law-curve], the every curve in the family of "power law secants", and the "power law tangent" are all the same curve.
 - **arithmetic**: the limit is trivial and we can just as well use the underlying expression for any value of $x$ and $a$ to calculate the constant elasticity.
 
-[^power-law-curve]: the properties we care about of these curves are not translation-invariant; on the contrary the location of the origin in crucial for comparing ratios of inputs to ratios of outputs. It is therefore fair to point out this is not "geometric" in the usual euclidean sence.
+[^power-law-curve]: the properties we care about of these curves are not translation-invariant; on the contrary the location of the origin in crucial for comparing ratios of inputs to ratios of outputs.
+It is therefore fair to point out this is not "geometric" in the usual euclidean sense.
 
-The geoemetric lemma is true for power law curves, but with the formulae given above, the arithmetic lemma is *false*!
-Let's try substituting an aribtrary power-law function and simplifying:
+The geometric lemma is true for power law curves, but with the formulae given above, the arithmetic lemma is *false*!
+Let's try substituting an arbitrary power-law function and simplifying:
 
 ```math
 \frac {\frac {b \cdot x^c} {b\cdot a^c} - 1} {\frac x a - 1} = \frac {\frac {x^c} {a^c} - 1} {\frac x a - 1}
@@ -465,17 +469,24 @@ Try this:
 \epsilon(f) \stackrel{?}{=} a \mapsto \lim_{x \to a} \log_{x/a}{\frac {f(x)} {f(a)}}
 ```
 
-The intution here is we are comparing a small *multiplicative* perturbation in the input to the corresponding perturbation in the output, and instead of taking quotient of these quantities (inverse binary multiplication), we are taking the logarithm (inverse binary exponentiation). We are asking, what power of the input multiplicative perturbation yeilds the output multiplicative perturbation?
+The intuition here is we are comparing a small *multiplicative* perturbation in the input to the corresponding perturbation in the output, and instead of taking quotient of these quantities (inverse binary multiplication), we are taking the logarithm (inverse binary exponentiation).
+We are asking, what power of the input multiplicative perturbation yields the output multiplicative perturbation?
 
-It is very interesting to compare this definition, the multiplicative derivative from before, and the regular additive derivative. The multiplicative derivative "upgraded" *output*-dimesion operation (subtraction to division), but left *input*-dimesion one the same, additive as before (that is $a - x$ is still the same). The multiplicative derivative's mixed dimension $\frac {\mathrm{Output}} {\mathrm{Input}}$ operation (division) also got upgraded to a root. (Note that after this upgrading, the mixed-dimension operation becomes a dimensionless one.)
+It is very interesting to compare this definition, the multiplicative derivative from before, and the regular additive derivative.
+The multiplicative derivative "upgraded" *output*-dimension operation (subtraction to division), but left *input*-dimension one the same, additive as before (that is $a - x$ is still the same).
+The multiplicative derivative's mixed dimension $\frac {\mathrm{Output}} {\mathrm{Input}}$ operation (division) also got upgraded to a root.
+(Note that after this upgrading, the mixed-dimension operation becomes a dimensionless one.)
 
-In this definition, *both* the input and output dimension operations are upgraded, $f(x) - f(a)$ becomes $\frac {f(x)} {f(a)}$, and $x - a$ becomes $x / a$. The mixed dimension division gets upgraded to a different sort of next level operation, the logarithm. It might be tempting to think of this function as "more upgraded" since the input operations are updated too, and logarithms are more "exotic" than roots, but keep in mind that there is also a tension between inputs and outputs, and in some sense upgrading both "cancels out" the upgrading some more.
+In this definition, *both* the input and output dimension operations are upgraded, $f(x) - f(a)$ becomes $\frac {f(x)} {f(a)}$, and $x - a$ becomes $x / a$.
+The mixed dimension division gets upgraded to a different sort of next level operation, the logarithm.
+It might be tempting to think of this function as "more upgraded" since the input operations are updated too, and logarithms are more "exotic" than roots, but keep in mind that there is also a tension between inputs and outputs, and in some sense upgrading both "cancels out" the upgrading some more.
 
-Finally, lets note that we can rewite the non-standard-base logarithm the usual way.
+Finally, lets note that we can rewrite the non-standard-base logarithm the usual way.
 ```math
 \epsilon(f) \stackrel{?}{=} a \mapsto \lim_{x \to a} \frac {\ln \frac {f(x)} {f(a)}} {\ln \frac x a} = a \mapsto \lim_{x \to a} \frac {\ln f(x) - \ln f(a)} {\ln x  - \ln a}
 ```
-I didn't do this before because it obscures the analogies I wanted to make, and also because the third expression above is not dimensionally compliant. But I include them now since these are more "conventional" formulae, at what I deem less cost.
+I didn't do this before because it obscures the analogies I wanted to make, and also because the third expression above is not dimensionally compliant.
+But I include them now since these are more "conventional" formulae, at what I deem less cost.
 
 Is this formula valid for elasticity? Well, it does work for power-law functions:
 
@@ -497,7 +508,8 @@ Finally, we sketch a proof that it is.
 The proof is limit more than our previous observation comparing $\bar{g}$ and $\bar{\bar{g}}$:
 $\ln$ and $x \mapsto x - 1$ are similar functions close to 1, and by [L'Hôpital's_rule](https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule), the original and new formula (with the limits) are in fact equal.
 
-For the record, the new formula is not entirely made up by me. The wikipedia pages after all have the informal
+For the record, the new formula is not entirely made up by me.
+The Wikipedia pages after all have the informal
 ```math
 \epsilon = \frac {d \ln y} {d \ln x}
 ```
