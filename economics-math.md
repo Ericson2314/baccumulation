@@ -547,7 +547,7 @@ Then we have the following things:
 
 - Elasticity a new way:
   ```math
-  \epsilon = \frac {\ln q y} {\ln q x} = \log_{q x} {q y}
+  \epsilon = \frac {d \ln y} {d \ln x} = \frac {\ln q y} {\ln q x} = \log_{q x} {q y}
   ```
 
 - The multiplicative derivative is:
