@@ -424,21 +424,24 @@ x \mapsto a \cdot x^k
 
 (In particular, $\epsilon(x \mapsto a \cdot x^k) = k$.)
 
-Recall the limit definition of a derivative
+Recall the limit definition of a derivative:
 ```math
 f' = a \mapsto \lim_{x \to a} \frac {f(x) - f(a)} {x - a}
 ```
-The standard geometric interpretation of this is we have a family of secants, with the two points of the secant growing ever closer together, and their limit is the one-point tangent.[^tangent-limit] expression underneath the limit is the slopes of the family of secants, and with the limit it is the slop of the tangent.
+The standard geometric interpretation of the derivative is we have a family of secants, with the two points of the secant growing ever closer together, and their limit is the one-point tangent.[^tangent-limit]
+The expression inside the limit, called the [difference quotient](https://en.wikipedia.org/wiki/Difference_quotient), is the slopes of the family of secants (the choice of $x$ determines the secant in question)
+The overall expression, with the limit, it is the slop of the tangent.
 
 [^tangent-limit]: For anyone not familiar, the [Wikipedia page on tangants](https://en.wikipedia.org/wiki/Tangent) speaks of this limit somewhat.
 
 Less well-known is the idea that we can do a similar geometric construction for elasticities.
 Two points determine a power-law function just as they determine a line; we can thus speak of a "power-law secant", and in the limit as the two points approach, we have a "power law tangent".
+We'd want the inner expression to be the elasticities of the family of "power-law secants", and the overall expression should be the elasticity of the tangent.
 
 The curves of constant slope are just lines, graphs of functions in the form $x \mapsto  a \cdot x + b$.
 In this case, we note two lemmas, one geometric and the other arithmetic:
 - **geometric**: the original line *is* every line in the family of secants *is* the tangent line
-- **arithmetic**: the limit is trivial and we can just as well use the underlying expression for any value of $x$ and $a$ to calculate the constant slope.
+- **algebraic**: the limit is trivial and we can just as well use the underlying expression for any value of $x$ and $a$ to calculate the constant slope.
 
 For good practice, lets prove the second lemma:
 
@@ -448,7 +451,7 @@ For good practice, lets prove the second lemma:
 
 Likewise, we would expect the same thing about curves of constant elasticity:
 - **geometric**: the original power law curve[^power-law-curve], the every curve in the family of "power law secants", and the "power law tangent" are all the same curve.
-- **arithmetic**: the limit is trivial and we can just as well use the underlying expression for any value of $x$ and $a$ to calculate the constant elasticity.
+- **algebraic**: the limit is trivial and we can just as well use the underlying expression for any value of $x$ and $a$ to calculate the constant elasticity.
 
 [^power-law-curve]: the properties we care about of these curves are not translation-invariant; on the contrary the location of the origin in crucial for comparing ratios of inputs to ratios of outputs.
 It is therefore fair to point out this is not "geometric" in the usual euclidean sense.
