@@ -258,7 +258,7 @@ B_{n +1} = (B_n - P_n) \cdot \exp(\bar{\bar{r}}_n \cdot \Delta t_n)
 which is say the next balance before interest is the old balance less the payment.
 Then the final next balance also includes the interest is calculated from that intermediate total.
 
-We can do "discrete differential equations", both additive and multiplicative, for this:
+We can do "discrete differential equations", called as ["difference equations"](https://en.wikipedia.org/wiki/Recurrence_relation#difference_equation), and their multiplicative counterpart, for this:
 ```math
 \Delta B = (B - P) \cdot \exp(\bar{\bar{r}} \cdot \Delta t) - B
 ```
