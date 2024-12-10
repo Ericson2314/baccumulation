@@ -21,6 +21,9 @@ This is needed for one-sided outer joins:
 ```math
 \mathrm{left\_join} : \forall A B. \mathrm{Set} A \to \mathrm{Set} B \to (A \to B \to \mathrm{Bool}) \to \mathrm{Set} (A \times \mathrm{Option} B)
 ```
+```math
+\mathrm{right\_join} : \forall A B. \mathrm{Set} A \to \mathrm{Set} B \to (A \to B \to \mathrm{Bool}) \to \mathrm{Set} (\mathrm{Option} A \times B)
+```
 
 `These` for full outer joins:
 
