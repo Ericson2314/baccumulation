@@ -1,4 +1,4 @@
-# Multiplicative infinitesimals?
+# Multiplicative infinitesimals
 
 > This goes with [Multiplicative Calculus](./multiplicative-calculus.md), but where as that is mostly summarizing others work, this is original as far as I know, and so I split it out.
 
