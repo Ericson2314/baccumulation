@@ -33,7 +33,8 @@ Now, we can hardly define this $q$ syntax with the analog what was just a hand-w
 In my writing about [elasticity](../economics-math.md#Elasticity), I wrote about "multiplicative perturbations".
 I also concluded with pointing out the $d\ln x$ in the Wikipedia article.
 If the $d$ "makes the expression very close to 0"; with the logarithm, that would make the $x$ close to 1.
-The $q$ which we are trying to define also does that, and it is always the case (no limit needed for $a \to x$ needed for this to be true) that
+The $q$ which we are trying to define also does that.
+It is always the case (no limit needed for $a \to x$ needed for this to be true) that
 ```math
 \ln a - \ln x = \ln \frac a x
 ```
@@ -41,15 +42,33 @@ On these grounds, let's *declare* (as an axiom) that
 ```math
 d \ln x = \ln q x
 ```
-and also
+from that, we can also define $q$ outright:
+```math
+q x = \exp(\ln q x) = \exp(d \ln x)
+```
+Note how this is the same sort of relationship we had with the multiplicative derivative and integral,
+something in the form $m = \exp \circ a \circ \exp^{-1}$,
+where the multiplicative version ($m$) is equal to the conventional additive version ($a$), composed with an $\exp$ after and $\exp^{-1}$ before.
+
+With $q$ now so defined, we can start deriving some things.
+First, as warm-up, let's find the $\exp$ counter part to our original axiom:
+```math
+d \ln x = \ln q x
+```
+substitute $\exp(x)$ for $x$:
+```math
+d \ln \exp(x) = \ln q \exp(x)
+```
+cancel out on the left:
+```math
+d x = \ln q \exp(x)
+```
+apply $\exp$ to both sides:
 ```math
 \exp(d x) = q \exp(x)
 ```
 
-I believe those two axioms are sufficient to always allow rewriting a $C[q E]$ into a $C'[d E']$, for any context $C$ and expression $E$;
-thus, they serve as a definition for $q$.
-
-With $q$ now so defined, we can introduce Leibnitz notation for
+More interestingly, we can also introduce Leibnitz-style notation for the concepts we've covered elsewhere:
 
 - [Elasticity](../economics-math.md#Elasticity):
   ```math
