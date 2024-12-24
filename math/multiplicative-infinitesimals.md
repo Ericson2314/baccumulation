@@ -91,7 +91,7 @@ The latter nicely works for the [fundamental theorem of calculus](https://en.wik
 {\huge \mathscr{P}} \left( \sqrt[d x] {q f(x)} \right)^{d x}
 ```
 ```math
-{\huge \mathscr{P}} q f
+{\huge \mathscr{P}} q f(x)
 ```
 ```math
 f
