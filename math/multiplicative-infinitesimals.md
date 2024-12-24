@@ -67,6 +67,11 @@ apply $\exp$ to both sides:
 ```math
 \exp(d x) = q \exp(x)
 ```
+flip:
+```math
+q \exp(x) = \exp(d x)
+```
+Now we have equations for both how we can pull-out a $\ln$ over a $d$, converting it a $q$, and how we can pul out an $\exp$ over a $q$, converting it to a $d$.
 
 More interestingly, we can also introduce Leibnitz-style notation for the concepts we've covered elsewhere:
 
