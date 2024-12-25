@@ -12,9 +12,11 @@ They are, "additive", in a few key ways:
 
 3. They thus suffice for regular additive calculus, but not the multiplicative calculus linked above.
 
-The first one is self-evident enough, but the other two need some explaining.
+For the first, the intuition for a regular infinitesimal is that is a very small number, smaller than any non-zero real number.
+If we multiply a real number by an infinitesimal, we always get another infinitesimal, never a real number, just like when we multiply any real number by 0, we always get zero.
+0 and infinitesimals are "not multiplicative numbers" like the non-zero real numbers, because they represent this "point of no return".
 
-For the first, let's start by expanding (quasi-)Leibniz notation for the derivation into the conventional limit definition.
+For the second, let's start by expanding (quasi-)Leibniz notation for the derivation into the conventional limit definition.
 ```math
 \frac {d f(x)} {d x} = \lim_{a \to x} \frac {f(a) - f(x)} {a - x}
 ```
@@ -23,15 +25,20 @@ i.e. we subtract $E$ from "almost $E$", but replacing $x$ with $a$ in the first 
 (Exactly formalizing this is probably harder, so I won't attempt it.)
 This is the subtraction I was referring to.
 
-The corresponding definitions in multiplicative calculus sometimes use this subtraction, but also use *quotients* instead of differences.
-For that, normal infinitesimals do not help, and this is why they are not sufficient.
+The corresponding definitions in multiplicative calculus sometimes use this subtraction, but also use *quotients* instead of differences of expressions involving the limit variable and where its going.
+In other words, They have terms like $E[x \mapsto a] / E$, not just terms like $E[x \mapsto a] - E$.
+For the former terms, normal infinitesimals won't work: whereas the differences go to zero in the limit, these go to one.
+Normal infinitesimals are thus not sufficient for a Leibnitz-style multiplicative calculus (without limits); we'll need something else.
 
-But suppose we had something for the $E[x \mapsto a] / E$ quotient; let's call it $qE$?
-That would suffice.
+But suppose we had something for the $E[x \mapsto a] / E$ quotient?
+This would not be a very small number, but it would be very close to $1$, the way a normal infinitesimal is very close to $0$.
+$1$ is the multiplicative identity just as $0$ is the additive identity; this is a good sign we are on the way to an analogous notion.
+Without knowing quite what we have let, lets bestow our notion with some syntax: let's call the infinitesimal-like thing corresponding to $E[x \mapsto a] / E$ $qE$.
 Now, we can hardly define this $q$ syntax with the analog what was just a hand-wave for the normal $d$ syntax, but I can do so a different way.
 
-In my writing about [elasticity](../economics-math.md#Elasticity), I wrote about "multiplicative perturbations".
-I also concluded with pointing out the $d\ln x$ in the Wikipedia article.
+In my writing about [elasticity](../economics-math.md#Elasticity), I wrote about "multiplicative perturbations";
+If a regular infinitesimal is an "additive perturbation" --- think of the difference as first being slightly displaced, and then returning to almost but not quite the same position, this would be a "multiplicative" one, would it not?
+I also concluded with pointing out the $d\ln x$ in one of the Wikipedia articles for elasticity.
 If the $d$ "makes the expression very close to 0"; with the logarithm, that would make the $x$ close to 1.
 The $q$ which we are trying to define also does that.
 It is always the case (no limit needed for $a \to x$ needed for this to be true) that
