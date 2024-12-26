@@ -33,7 +33,7 @@ Normal infinitesimals are thus not sufficient for a Leibnitz-style multiplicativ
 But suppose we had something for the $E[x \mapsto a] / E$ quotient?
 This would not be a very small number, but it would be very close to $1$, the way a normal infinitesimal is very close to $0$.
 $1$ is the multiplicative identity just as $0$ is the additive identity; this is a good sign we are on the way to an analogous notion.
-Without knowing quite what we have let, lets bestow our notion with some syntax: let's call the infinitesimal-like thing corresponding to $E[x \mapsto a] / E$ $qE$.
+Without knowing quite what we have yet, lets bestow our notion with some syntax: let's call the infinitesimal-like thing corresponding to $E[x \mapsto a] / E$ $qE$.
 Now, we can hardly define this $q$ syntax with the analog what was just a hand-wave for the normal $d$ syntax, but I can do so a different way.
 
 In my writing about [elasticity](../economics-math.md#Elasticity), I wrote about "multiplicative perturbations";
@@ -78,7 +78,7 @@ flip:
 ```math
 q \exp(x) = \exp(d x)
 ```
-Now we have equations for both how we can pull-out a $\ln$ over a $d$, converting it a $q$, and how we can pul out an $\exp$ over a $q$, converting it to a $d$.
+Now we have equations for both how we can pull-out a $\ln$ over a $d$, converting it a $q$, and how we can pull out an $\exp$ over a $q$, converting it to a $d$.
 
 More interestingly, we can also introduce Leibnitz-style notation for the concepts we've covered elsewhere:
 
