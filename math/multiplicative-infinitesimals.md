@@ -4,7 +4,7 @@
 
 > This goes with [Multiplicative Calculus](./multiplicative-calculus.md), but where as that is mostly summarizing others work, this is original as far as I know, and so I split it out.
 
-Despite their formal rigor (in conventional analysis), [infinitesimals](https://en.wikipedia.org/wiki/Infinitesimal) are liked in some settings, like informally solving differential equations, and other applied tasks.
+Despite their lack of formal rigor (in conventional analysis), [infinitesimals](https://en.wikipedia.org/wiki/Infinitesimal) are liked in some settings, like informally solving differential equations, and other applied tasks.
 (It is interesting to ask why, how they can be made formal, and other questions, but I will refrain from doing so here.)
 They are, "additive", in a few key ways:
 
