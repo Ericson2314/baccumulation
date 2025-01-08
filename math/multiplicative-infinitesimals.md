@@ -1,5 +1,7 @@
 # Multiplicative infinitesimals
 
+## Introduction
+
 > This goes with [Multiplicative Calculus](./multiplicative-calculus.md), but where as that is mostly summarizing others work, this is original as far as I know, and so I split it out.
 
 [Infinitesimals](https://en.wikipedia.org/wiki/Infinitesimal) are liked, despite their formal rigor (in most settings), are liked in some settings, like informally solving differential equations, and other applied tasks.
@@ -57,6 +59,8 @@ Note how this is the same sort of relationship we had with the multiplicative de
 something in the form $m = \exp \circ a \circ \exp^{-1}$,
 where the multiplicative version ($m$) is equal to the conventional additive version ($a$), composed with an $\exp$ after and $\exp^{-1}$ before.
 
+## Usage
+
 With $q$ now so defined, we can start deriving some things.
 First, as warm-up, let's find the $\exp$ counter part to our original axiom:
 ```math
@@ -105,3 +109,33 @@ f
 ```
 
 Food for thought!
+
+## Models
+
+I checked out [Nonstandard analysis](https://en.wikipedia.org/wiki/Nonstandard_analysis) and [Hyperreal number](https://en.wikipedia.org/wiki/Hyperreal_number) on Wikipedia, which I had been meaning to do for a while, to see whether these multiplicative infinitesimals are already "handled" by it.
+I think they are.
+Nonstandard analysis has a notion of [*halo*](https://en.wikipedia.org/wiki/Monad_(nonstandard_analysis)).
+The halo around $0$ is just the infinitesimals.
+The halo around $1$ should be the multiplicative infinitesimals.
+
+I think follows from the definition of $q$ we gave above:
+```math
+q x = \exp(d \ln x)
+```
+then use the nonstandard analysis definition of $d$:
+```math
+q x = \exp\left(\frac 1 x d x\right)
+```
+and then pull out the $d x$:
+```math
+q x = \exp\left(\frac 1 x\right)^{d x}
+```
+That is not easy to read, but I am pretty sure that since $\mathop{\text{st}}(d x) = 0$, then for all $x \ne 0$:
+```math
+\begin{align}
+\mathop{\text{st}}(q x)
+&= \mathop{\text{st}}\left(\exp\left(\frac 1 x\right)^{d x}\right) \\
+&= \exp\left(\frac 1 x\right)^0 \\
+&= 1
+\end{align}
+```
