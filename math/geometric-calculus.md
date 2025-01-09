@@ -1,11 +1,14 @@
-# Multiplicative Calculus
+# Geometric Calculus
 
 In search of better formalisms for the reason described in my [economics math](../economics-math.md) write up,
-I found my way [multiplicative integral](https://en.wikipedia.org/wiki/Product_integral) wikipedia page.
+I found my way ["product integral"](https://en.wikipedia.org/wiki/Product_integral) wikipedia page.
 
 When I was first taking economics masters classes at [John Jay](https://johnjayeconomics.org/), that Wikipedia article was  in a lot worse shape, and didn't give me the answers I was looking for.
 But now it is much better, and in particular it now cites <doi:10.1016/j.jmaa.2007.03.081> which is fantastic!
 You should just go read the paper yourself.
+
+There is also <https://sites.google.com/site/nonnewtoniancalculus> which contains a great many other resources, from the people that started this line of research (as far as anyone knows).
+The authors [argue](https://sites.google.com/site/nonnewtoniancalculus/-multiplicative-calculus) that the term "multiplicative calculus" should not be used because it is ambiguous, which I found compelling, so I have re-tiled this page accordingly.
 
 I don't like doing the "unoriginal recap as blogpost" thing, but there are a few things I want to highlight,
 and also a few more basic precaluculus notions (that the paper did not cover) that I want to place alongside them.
@@ -14,9 +17,9 @@ and also a few more basic precaluculus notions (that the paper did not cover) th
 
 ## $\mathbb{R} \to \mathbb{R}$ function calculus
 
-### Multiplicative derivative
+### Geometric derivative
 
-The multiplicative derivative is defined as follows:
+The geometric derivative is defined as follows:
 
 ```math
 f^* := a \mapsto \lim_{x \to a} \left( \frac{f(x)}{f(a)} \right)^\frac{1}{x -a}
@@ -56,7 +59,7 @@ D_* &= (\exp \circ \_) \circ D_+ \circ (\ln \circ \_) \\
 
 We can now see the very nice way our new form of differentiation looks something like a group conjugation: tweak (the function), differentiate, and then untweak.
 
-### Multiplicative integral
+### Geometric integral
 
 Defining integrals formally is pain, so let's do something short of that.
 
@@ -64,10 +67,10 @@ Defining integrals formally is pain, so let's do something short of that.
 {\huge \mathscr{P}}_a^b f(x)^{dx} := \lim_{\Delta x \to 0} \prod f(x)^{\Delta x}
 ```
 
-The multiplicative Riemann integral is "defined" as the limit of the product of increasingly many samples of $f(x)$ taken to the $\Delta x$ power.
+The geometric Riemann integral is "defined" as the limit of the product of increasingly many samples of $f(x)$ taken to the $\Delta x$ power.
 
-The geometric intuitions off this are not as clear as the additive Riemann integral because are multiplicands of this are not "little rectangles" the way the addends of that are.
-Indeed, as $x$ and $f(x)$ must be dimensionless, any geometric/visual intuition is inherently suspect!
+The spatial/geometric ["geometric" in the strict sense of "geometry", not "multiplication"] intuitions of this are not as clear as the additive Riemann integral because are multiplicands of this are not "little rectangles" the way the addends of that are.
+Indeed, as $x$ and $f(x)$ must be dimensionless, any spatial/visual intuition is inherently suspect!
 
 This definition can be reworked into a regular integral:
 
@@ -82,4 +85,4 @@ This definition can be reworked into a regular integral:
 \end{align}
 ```
 
-This saves us from actually needing to rigorously define the multiplicative integral from scratch.
+This saves us from actually needing to rigorously define the geometric integral from scratch.

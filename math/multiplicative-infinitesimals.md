@@ -2,7 +2,7 @@
 
 ## Introduction
 
-> This goes with [Multiplicative Calculus](./multiplicative-calculus.md), but where as that is mostly summarizing others work, this is original as far as I know, and so I split it out.
+> This goes with [Geometric Calculus](./geometric-calculus.md), but where as that is mostly summarizing others work, this is original as far as I know, and so I split it out.
 
 Despite their lack of formal rigor (in conventional analysis), [infinitesimals](https://en.wikipedia.org/wiki/Infinitesimal) are liked in some settings, like informally solving differential equations, and other applied tasks.
 They are, "additive", in a few key ways:
@@ -11,7 +11,7 @@ They are, "additive", in a few key ways:
 
 2. They correspond to subtraction inside limits.
 
-3. They thus suffice for regular additive calculus, but not the multiplicative calculus linked above.
+3. They thus suffice for regular additive calculus, but not the geometric calculus linked above.
 
 For the first, the intuition for a regular infinitesimal is that is a very small number, smaller than any non-zero real number.
 If we multiply a real number by an infinitesimal, we always get another infinitesimal, never a real number, just like when we multiply any real number by 0, we always get zero.
@@ -26,10 +26,10 @@ i.e. we subtract $E$ from "almost $E$", but replacing $x$ with $a$ in the first 
 (Exactly formalizing this is probably harder, so I won't attempt it.)
 This is the subtraction I was referring to.
 
-The corresponding definitions in multiplicative calculus sometimes use this subtraction, but also use *quotients* instead of differences of expressions involving the limit variable and where its going.
+The corresponding definitions in geometric calculus sometimes use this subtraction, but also use *quotients* instead of differences of expressions involving the limit variable and where its going.
 In other words, They have terms like $E[x \mapsto a] / E$, not just terms like $E[x \mapsto a] - E$.
 For the former terms, normal infinitesimals won't work: whereas the differences go to zero in the limit, these go to one.
-Normal infinitesimals are thus not sufficient for a Leibnitz-style multiplicative calculus (without limits); we'll need something else.
+Normal infinitesimals are thus not sufficient for a Leibnitz-style geometric calculus (without limits); we'll need something else.
 
 But suppose we had something for the $E[x \mapsto a] / E$ quotient?
 This would not be a very small number, but it would be very close to $1$, the way a normal infinitesimal is very close to $0$.
@@ -54,7 +54,7 @@ from that, we can also define $q$ outright:
 ```math
 q x = \exp(\ln q x) = \exp(d \ln x)
 ```
-Note how this is the same sort of relationship we had with the multiplicative derivative and integral,
+Note how this is the same sort of relationship we had with the geometric derivative and integral,
 something in the form $m = \exp \circ a \circ \exp^{-1}$,
 where the multiplicative version ($m$) is equal to the conventional additive version ($a$), composed with an $\exp$ after and $\exp^{-1}$ before.
 
@@ -89,11 +89,13 @@ More interestingly, we can also introduce Leibnitz-style notation for the concep
   ```math
   \epsilon = \frac {d \ln y} {d \ln x} = \frac {\ln q y} {\ln q x} = \log_{q x} {q y}
   ```
+  Elasticity corresponds to the logarithm of the "bigeometric derivative" --- both the input and output sides of the equations use $q$ rather than the regular $d$, indicating why the "bi-" prefix is appropriate.
 
-- The multiplicative derivative:
+- The geometric derivative:
   ```math
   \sqrt[d x] {q y}
   ```
+  The fact that has a $q$ for the "output side", but one regular $d$ for the "input side" illustrates why this derivative is "monogeometric" --- the input is still conventional addition.
 
 The latter nicely works for the [fundamental theorem of calculus](https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus):
 
