@@ -61,6 +61,7 @@ where the multiplicative version ($m$) is equal to the conventional additive ver
 ## Usage
 
 With $q$ now so defined, we can start deriving some things.
+
 First, as warm-up, let's find the $\exp$ counter part to our original axiom:
 ```math
 d \ln x = \ln q x
@@ -83,21 +84,25 @@ q \exp(x) = \exp(d x)
 ```
 Now we have equations for both how we can pull-out a $\ln$ over a $d$, converting it a $q$, and how we can pull out an $\exp$ over a $q$, converting it to a $d$.
 
-More interestingly, we can also introduce Leibnitz-style notation for the concepts we've covered elsewhere:
+More interestingly, we can also introduce Leibnitz-style notation for the concepts we've covered elsewhere.
 
-- [Elasticity](../economics-math.md#Elasticity):
-  ```math
-  \epsilon = \frac {d \ln y} {d \ln x} = \frac {\ln q y} {\ln q x} = \log_{q x} {q y}
-  ```
-  Elasticity corresponds to the logarithm of the "bigeometric derivative" --- both the input and output sides of the equations use $q$ rather than the regular $d$, indicating why the "bi-" prefix is appropriate.
+Here is [Elasticity](../economics-math.md#Elasticity):
 
-- The geometric derivative:
-  ```math
-  \sqrt[d x] {q y}
-  ```
-  The fact that has a $q$ for the "output side", but one regular $d$ for the "input side" illustrates why this derivative is "monogeometric" --- the input is still conventional addition.
+```math
+\epsilon = \frac {d \ln y} {d \ln x} = \frac {\ln q y} {\ln q x} = \log_{q x} {q y}
+```
 
-The latter nicely works for the [fundamental theorem of calculus](https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus):
+Elasticity corresponds to the logarithm of the "bigeometric derivative" --- both the input and output sides of the equations use $q$ rather than the regular $d$, indicating why the "bi-" prefix is appropriate.
+
+Here is the geometric derivative:
+
+```math
+\sqrt[d x] {q y}
+```
+
+The fact that has a $q$ for the "output side", but one regular $d$ for the "input side" illustrates why this derivative is "monogeometric" --- the input is still conventional addition.
+
+The geometric derivative example nicely works for the geometric [fundamental theorem of calculus](https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus):
 
 ```math
 {\huge \mathscr{P}} \left( \sqrt[d x] {q f(x)} \right)^{d x}
