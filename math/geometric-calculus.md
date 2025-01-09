@@ -1,7 +1,7 @@
 # Geometric Calculus
 
 In search of better formalisms for the reason described in my [economics math](../economics-math.md) write up,
-I found my way ["product integral"](https://en.wikipedia.org/wiki/Product_integral) wikipedia page.
+I found my way to the ["product integral"](https://en.wikipedia.org/wiki/Product_integral) wikipedia page.
 
 When I was first taking economics masters classes at [John Jay](https://johnjayeconomics.org/), that Wikipedia article was  in a lot worse shape, and didn't give me the answers I was looking for.
 But now it is much better, and in particular it now cites <doi:10.1016/j.jmaa.2007.03.081> which is fantastic!
