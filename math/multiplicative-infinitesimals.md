@@ -115,28 +115,53 @@ Food for thought!
 
 I checked out [Nonstandard analysis](https://en.wikipedia.org/wiki/Nonstandard_analysis) and [Hyperreal number](https://en.wikipedia.org/wiki/Hyperreal_number) on Wikipedia, which I had been meaning to do for a while, to see whether these multiplicative infinitesimals are already "handled" by it.
 I think they are.
-Nonstandard analysis has a notion of [*halo*](https://en.wikipedia.org/wiki/Monad_(nonstandard_analysis)).
+Nonstandard analysis has a notion of a [*halo*](https://en.wikipedia.org/wiki/Monad_(nonstandard_analysis)).
 The halo around $0$ is just the infinitesimals.
 The halo around $1$ should be the multiplicative infinitesimals.
 
-I think follows from the definition of $q$ we gave above:
+This follows from the definition of $q$ we gave above:
 ```math
 q x = \exp(d \ln x)
 ```
-then use the nonstandard analysis definition of $d$:
+
+First, let's put back in an $f^*$ to make it more general.[^higher-order]
 ```math
-q x = \exp\left(\frac 1 x d x\right)
+q f^*(x) = \exp(d(\ln f^*(x)))
 ```
-and then pull out the $d x$:
+
+[^higher-order]: Remember, calculus is semantically a higher-order theory, as attractive as first-order infinitesimal manipulation is.
+
+Next, let's replace $x$ with $x + h$, pattern matching to split the hyperreal into non-infinitesimal ($x$ again, fresh / shadowing) and infinitesimal ($h$) parts.
 ```math
-q x = \exp\left(\frac 1 x\right)^{d x}
+q f^*(x + h) = \exp(d(\ln f^*(x + h)))
 ```
-That is not easy to read, but I am pretty sure that since $\mathop{\text{st}}(d x) = 0$, then for all $x \ne 0$:
+
+The nonstandard analysis definition of $d$ is as follows:
+```math
+d f^*(x + h) = f^*(x + h) - f^*(x)
+```
+
+Let's substitute it:
 ```math
 \begin{align}
-\mathop{\text{st}}(q x)
-&= \mathop{\text{st}}\left(\exp\left(\frac 1 x\right)^{d x}\right) \\
-&= \exp\left(\frac 1 x\right)^0 \\
+q f^*(x + h)
+&= \exp\left((\ln \circ f^*)(x + h) - (\ln \circ f^*)(x)\right) \\
+&= \exp\left(\ln \left(\frac {f^*(x + h)} {f^*(x)}\right)\right) \\
+&= \frac {f^*(x + h)} {f^*(x)}
+\end{align}
+```
+
+The final version of that equation is analogous to the definition of $d$ in just the right way --- multiplication replaced with addition!
+
+To check if it is in fact always a halo around $1$, we need to take its standard part:
+```math
+\begin{align}
+\mathop{\text{st}}(q f(x + h))
+&= \mathop{\text{st}}\left(\frac {f^*(x + h)} {f^*(x)}\right) \\
+&= \frac {\mathop{\text{st}}(f^*(x + h))} {f(x)} \\
+&= \frac {f(\mathop{\text{st}}(x + h))} {f(x)} \\
+&= \frac {f(x)} {f(x)} \\
 &= 1
 \end{align}
 ```
+it is!
