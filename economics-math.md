@@ -309,6 +309,11 @@ except that one skips the final $\exp$ step, losing the symmetry.
 
 ### Elasticity
 
+> I have since discovered <https://sites.google.com/site/nonnewtoniancalculus>, which clarifies that the elasticity corresponds to the *bigeometric calculus*.
+> In particular, elasticity it is the logarithm of the *bigeometric derivative*.
+> This is a lot more precise than what I had below, elucidating the exact sort of structure I wanted to get at.
+> I guess what is left to do is keep the "story form" so this can serve as a hopefully-compelling narrative introduction, but now one with a clear and known destination.
+
 The [Wikipedia article for elasticity](https://en.wikipedia.org/wiki/Elasticity_(economics)), like most econ texts I could find from a quick glance, just has an informal definition made from infinitesimals:
 
 The $x$-elasticity of $y$ is:
