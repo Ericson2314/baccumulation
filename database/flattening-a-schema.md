@@ -12,7 +12,7 @@ type GroundType = ...;
 type Identifier = string;
 
 type RowType = {
-  columns: Map<Identifier, GroundType>
+  columns: Map<Identifier, GroundType>;
 };
 
 // Represents a table with a primary key row and other columns
@@ -33,7 +33,7 @@ type ForeignKey = {
 
 // Represents the entire schema
 type Schema = {
-  tables: Map<Identifier, TableType>
+  tables: Map<Identifier, TableType>;
   // Table and column names must be valid in `tables`.
   foreign_keys: ForeignKey[];
 };
@@ -83,8 +83,8 @@ This is sloppy, and makes it harder to talk about the more advanced cases we wil
 >
 > ```typescript
 > {
->   person : Map<{ id: integer }, { name: string }>,
->   building : Map<{ id: integer }, { address: string }>,
+>   person: Map<{ id: integer }, { name: string }>;
+>   building: Map<{ id: integer }, { address: string }>;
 > }
 > ```
 >
@@ -189,7 +189,10 @@ Let's attempt another example, but, watch out --- there will be a problem.
 >
 > ```typescript
 > {
->   table: Map<{ id: integer }, { foo: { x: string } } | { bar: { y: integer } }>;
+>   table: Map<
+>     { id: integer },
+>     { foo: { x: string } } | { bar: { y: integer } }
+>   >;
 > }
 > ```
 >
@@ -313,9 +316,8 @@ type PersonId = integer;
 type Schema = {
   person: Map<
     { id: PersonId },
-    {
-      name: string,
-    }>,
+    { name: string }
+  >,
   pets: Map<
     { person: PersonId },
     Set<{ name: string }>
