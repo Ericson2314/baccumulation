@@ -305,6 +305,26 @@ The new feature would be unique indices that *span multiple tables*.
 }
 ```
 
+Start flattening.
+
+```typescript
+type PersonId = integer;
+
+type Schema = {
+  person: Map<
+    { id: PersonId },
+    {
+      name: string,
+    }>,
+  pets: Map<
+    { person: PersonId },
+    Set<{ name: string }>
+  >,
+};
+```
+
+Two nestings.
+
 ```typescript
 {
   person: Map<
