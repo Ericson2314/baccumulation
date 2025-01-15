@@ -33,7 +33,7 @@ type ForeignKey = {
 
 // Represents the entire schema
 type Schema = {
-  tables: Map<Identifier, TableType>[];
+  tables: Map<Identifier, TableType>
   // Table and column names must be valid in `tables`.
   foreign_keys: ForeignKey[];
 };
