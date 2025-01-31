@@ -343,6 +343,84 @@ type Schema = {
 };
 ```
 
+With this change, we can now redo our example from above:
+
+> **Example**:
+>
+> ```typescript
+> {
+>   table: Map<
+>     { id: integer },
+>     { foo: { x: string } } | { bar: { y: integer } }
+>   >;
+> }
+> ```
+>
+> Can become
+>
+> ```typescript
+> {
+>   tables: new Map([
+>     [
+>       "table_foo",
+>       {
+>         columns: {
+>           columns: new Map([
+>             ["id", "INTEGER"],
+>             ["x", "STRING"],
+>           ]),
+>         },
+>       },
+>     ],
+>     [
+>       "table_bar",
+>       {
+>         columns: {
+>           columns: new Map([
+>             ["id", "INTEGER"],
+>             ["y", "INTEGER"],
+>           ]),
+>         },
+>       },
+>     ],
+>   ]),
+>   foreign_keys: [], // No foreign keys
+>   uniques: [
+>     {
+>       tables_and_keys: new Map([
+>         ["table_foo", ["id"]],
+>         ["table_bar", ["id"]],
+>       ]),
+>     },
+>   ],
+> }
+> ```
+>
+> The multi-table unique index ensures that no `id` can occur more than once in *either* `table_foo` or `table_bar`.
+> When we convert the original value to the database value, we split into two tables, and when we convert back and recombine the two tables, we know that for any `id` we'll either take a row from `table_foo` or from `table_bar`.
+
+This is exacty the semantics we want.
+The case before we could not implement, where we had a row from each table, there was no good answer on what to do.
+Now, we know that case cannot happen thanks to the unique constraint.
+
+#### Implementation
+
+So does any database this?
+Not to my knowledge.
+
+Has anyone else even asked for the feature?
+I found a thread on the PostgreSQL mailing list [starting with this message](https://www.postgresql.org/message-id/BANLkTineoT4gKz8vybDQJarVhtxSf-84-g%40mail.gmail.com).
+But this discussion was more about workarounds than implementation.
+
+The [docs on inheritence](https://www.postgresql.org/docs/current/ddl-inherit.html#DDL-INHERIT-CAVEATS) mention essential the same missing feature:
+
+> If we declared `cities.name` to be `UNIQUE` or a `PRIMARY KEY`, this would not stop the `capitals` table from having rows with names duplicating rows in `cities`. And those duplicate rows would by default show up in queries from `cities`.
+> In fact, by default `capitals` would have no unique constraint at all, and so could contain multiple rows with the same name. You could add a unique constraint to `capitals`, but this would not prevent duplication compared to `cities`.
+
+Postgresql's "inheritence" feature can be thought of as some sugar for a "bidirectional" view: rules ensure that both queries and updates to the view are "fanned out" to the correct underlying table.
+The rules system supports operations that are needed (by rewriting requests from the client), but it doesn't help with the problem of *data at rest*.
+For that, we really need generalizations to indices, which are the "constructive" data structure underlying unique constraints.
+
 ## Nested containers
 
 ```typescript
