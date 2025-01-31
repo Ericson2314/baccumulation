@@ -122,10 +122,10 @@ As before, all of our data below is specified purely positionally.
 
 ## Extending CSV
 
-CSV doesn't support it, but if we steal `[` and `]` syntax (those can quoted to appear in strings), it can:
+CSV doesn't support it, but if we steal `[` and `]` syntax (those can be quoted to appear in strings), it can:
 
 ```hscv
-id,name,[pet,[id,name,species]]
+id,name,[pets,[id,name,species]]
 0,Alice,[
 0,Spot,dog
 ]
@@ -142,6 +142,54 @@ Every row is on its own line, and `[` `]` indicates:
 2. the beginning and ending of each "run" of rows, where each run corresponding to a nested header
 
 ## Final thoughts
+
+### HTML
+
+The venerable HTML
+[`rowspan`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/td#rowspan)
+and
+[`colspan`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/th#colspan)
+attributes exist for the purpose of rending this sort of information.
+
+For example, here is an HTML table for our running pets example:
+
+<table border="1">
+  <tr>
+    <th rowspan="2">id</th>
+    <th rowspan="2">name</th>
+    <th colspan="3">pets</th>
+  </tr>
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>species</th>
+  </tr>
+  <tr>
+    <td rowspan="1">0</td>
+    <td rowspan="1">Alice</td>
+    <td>0</td>
+    <td>Spot</td>
+    <td>dog</td>
+  </tr>
+  <tr>
+    <td rowspan="2">1</td>
+    <td rowspan="2">Bob</td>
+    <td>0</td>
+    <td>Teacup</td>
+    <td>pig</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Sassy</td>
+    <td>cat</td>
+  </tr>
+</table>
+
+However, the design of these attributes is oriented around presentation more than the content itself.
+The underlying hierarchical structure, like that if the hierarchical CSV example above, is not reproduced in the document node hierarchy, and instead rows have varying number of cells, with the numbers to `colspan` and `rowspan` patching things up.
+The HTML system is more expressive, in that there HTML "table shapes" that do not correspond to any hierarchical CSV, but the semantic meaning of those table shapes would have some other semantic meaning, left to the reader to infer.
+
+### Multiple tables
 
 I wrote above
 
