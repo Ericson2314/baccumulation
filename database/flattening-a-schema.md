@@ -291,8 +291,57 @@ we have to either throw one of the values away, or combine them somehow (which w
 
 ### Multi-table unique constraints
 
-There's simply no good solution here with how SQL currently works --- we need something new.
-The new feature would be unique indices that *span multiple tables*.
+There's simply no good[^bidirectional-constraint] solution here with how SQL currently works --- we need something new.
+The new feature would be unique constraint that *span multiple tables*.
+
+[^bidirectional-constraint]: With enough extra tables, bidirectional foreign keys, and [deferred constraints](https://www.postgresql.org/docs/current/sql-set-constraints.html) it is possible to solve this problem with some SQL databases.
+  But that is real pain.
+
+We can adjust our type for schemas to account for this:
+
+```typescript
+// Primitive types for column values. We don't actually care what these are
+type GroundType = ...;
+
+// Or could be something else
+type Identifier = string;
+
+type RowType = {
+  columns: Map<Identifier, GroundType>;
+};
+
+// Represents a table with a primary key row and other columns
+//
+// Primary key and other columns must use disjoint column names
+type TableType = {
+  // New: No primary key vs other columns distinction
+  columns: RowType;
+};
+
+// Represents a foreign key constraint
+type ForeignKey = {
+  local_table: Identifier;
+  foreign_table: Identifier;
+  // Assign foreign table's primary key columns to local table's columns
+  columns: Map<Identifier, Identifer>;
+};
+
+// Represents a unique constraint
+type Unique = {
+  // The *nth* referenced column must be of the same type in each table.
+  // The number of columns referenced (lenth of the list) must also be
+  // the same.
+  tables_and_keys: Map<Identifier, Identifier[]>;
+}
+
+// Represents the entire schema
+type Schema = {
+  tables: Map<Identifier, TableType>;
+  // Table and column names must be valid in `tables`.
+  foreign_keys: ForeignKey[];
+  uniques: Unique[];
+};
+```
 
 ## Nested containers
 
