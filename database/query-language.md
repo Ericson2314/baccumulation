@@ -1,5 +1,8 @@
 # Towards the next database query language
 
+> [!NOTE]
+> Everything here is a work in progress
+
 I don't yet have a full vision for a new query language but here are some loosely connected notes.
 Hopefully it will gel together over time.
 

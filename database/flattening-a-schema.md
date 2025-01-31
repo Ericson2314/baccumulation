@@ -423,6 +423,9 @@ For that, we really need generalizations to indices, which are the "constructive
 
 ## Nested containers
 
+> [!NOTE]
+> This section is a work in progess
+
 ```typescript
 {
   person: Map<
