@@ -148,6 +148,6 @@ I wrote above
 > The relational-db-knowing folks in the room are clamoring "use two tables!", but let's not go there.
 > We haven't said what a "table" is, we shouldn't start now.
 
-Well, to cut to the chase, the interesting thing is that this is isomorphic to two tables with the right foreign-key structure.
+Well, to cut to the chase, the interesting thing is that this is [isomorphic to two tables with the right foreign-key structure](./flattening-a-schema.md#nested-containers).
 Yes, that can be seen as reason to ban this in lieu of that, but I rather keep both ways of doing thing.
-This has implications for query language design.
+This has implications for [query language design](./query-language.md).
