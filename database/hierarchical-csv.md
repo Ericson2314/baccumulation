@@ -66,12 +66,12 @@ The data in "conventional" JSON5 usage looks like this:
       {
         "id": 0,
         "name": "Teacup",
-        "species: "pig",
+        "species": "pig",
       },
       {
         "id": 1,
         "name": "Sassy",
-        "species: "cat",
+        "species": "cat",
       },
     ],
   },

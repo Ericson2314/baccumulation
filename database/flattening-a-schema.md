@@ -441,6 +441,7 @@ For that, we really need generalizations to indices, which are the "constructive
 Start flattening.
 
 ```typescript
+// Stand-in for future foreign key constraints
 type PersonId = integer;
 
 type Schema = {
@@ -450,7 +451,7 @@ type Schema = {
   >,
   pets: Map<
     { person: PersonId },
-    Set<{ name: string }>
+    NonEmptySet<{ name: string }>
   >,
 };
 ```
