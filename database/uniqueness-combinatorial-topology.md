@@ -77,12 +77,11 @@ But it is also precisely the "closed under supersets" property, which means the 
 [Candidate keys](https://en.wikipedia.org/wiki/Candidate_key) are the minimal column sets, where removing any column results in a projection that is no longer unique.
 This is precisely the same minimality condition as that which characterizes a facet of a cocomplex --- remove any vertex and the set is no longer valid (in that cocomplex) simplex.
 
-The non-unique vertex sets likewise form a regular simplicial complex.
+The column sets which are not required to contain unique values per row likewise form a regular simplicial complex.[^non-unique]
+That is, every column set which is *not* superkey is simplex in such a complex, and every maximal non-superkey is a facet.
 
-### Addendum on "non-unique"
+Note that while the complex and the co-complex are complements (relative the set of all possible simplexes, of which all complexes and co-complexes are subsets), that does *not* mean that the complement of simplex in one complex/co-complex is a simplex in its dual.
+The complete complex (which is also a co-complex) contains every simplex, and thus the complement of every simplex also, and its dual is the empty complex/co-complex which contains no simplices.
 
-"non-unique" is a bit confusing above, because with databases we usually don't care about the exact relation in question (which changes over time) but a "schema" with *constraints* on each relation inside it.
-That is, a schema is a dependent sum of relations such that so and so products *must* be unique; no claim is made about whether the other projections are in fact non-unique or not.
-
-In light of this, we can speak of projections which are unique by definition on a relation of the schema, and projections which are potentially-non-unique.
-The unique ones from a given relation form a cocomplex, and the potentially-non-unique ones form a complex.
+[^non-unique]: I didn't simply call those "non-unique" column sets, or column sets which contain non-unique values, because they aren't actually *required* to contain duplicates, but merely *allowed* to.
+  You can have two "John Smiths" in your database, but you are not required to.
