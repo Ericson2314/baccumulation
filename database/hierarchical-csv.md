@@ -83,7 +83,7 @@ Try this:
 
 ```json5
 {
-  "header": ["id", "name", ["pets", [ "id", "name, "species", ], ], ],
+  "header": ["id", "name", ["pets", [ "id", "name", "species", ], ], ],
   "data": [
     [
       0,
