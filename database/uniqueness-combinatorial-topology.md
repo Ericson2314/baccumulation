@@ -6,7 +6,7 @@
 That is, given relation $A' \in \mathscr{P}A$, and projection $p$, $p$ *projects uniquely from* $A'$ if:
 
 ```math
-\forall a, b \in A' .\, a = b \leftarrow p(a) = p(b)
+\forall a, b \in A' .\, a = b \Leftrightarrow p(a) = p(b)
 ```
 
 A projection $a : A \to C$ *factors* into $c \cdot b$ if their exists two other projections $b : A \to B$ and $c : B \to C$ such that $a = b \cdot c$.
